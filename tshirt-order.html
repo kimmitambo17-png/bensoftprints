@@ -505,12 +505,17 @@
         }
 
         function finishSimulationAndSend() {
+            function finishSubmission() {
             setTimeout(() => {
                 document.getElementById('mpesa-status-text').innerText = "Payment Verified! Forwarding Order...";
                 document.getElementById('mpesa-status-text').style.color = "#28a745";
                 
                 setTimeout(() => {
-                    mpesaModal.style.display = 'none'; // Close M-Pesa screen
+                    mpesaModal.style.display = 'none'; // Hide overlay window safely
+                    form.submit(); // Fire form off to Formspree
+                }, 1000);
+            }, 10000); // <--- CHANGE THIS NUMBER RIGHT HERE!
+        }
                     
                     // --- NEW: AJAX FORMSPREE SUBMISSION BACKGROUND ENGINE ---
                     const formData = new FormData(form);
