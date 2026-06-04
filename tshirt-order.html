@@ -467,28 +467,28 @@
     }
 
     // --- NEW SNAPSHOT GENERATOR CODE ---
-    // --- UPDATED SUBMISSION FLOW WITH MPESA SIMULATION ---
+    // --- FINAL SUBMISSION FLOW WITH MPESA SIMULATION & AJAX SUCCESS ---
     document.getElementById('tshirtOrderForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Stop the form from sending instantly to let our simulation run
+        e.preventDefault(); // Stop the form from performing a hard page reload
         
         const form = this;
         const customerPhone = document.getElementById('cust-phone').value;
         const shirtTarget = document.getElementById('canvas-shirt');
         const mpesaModal = document.getElementById('mpesa-modal');
         
-        // 1. Show the customer's typed mobile number inside our mock M-Pesa screen
+        // 1. Show customer's mobile number inside our mock M-Pesa screen
         document.getElementById('mpesa-phone-display').innerText = customerPhone || "Customer Device";
         
-        // 2. Open the overlay
+        // 2. Open the M-Pesa overlay window
         mpesaModal.style.display = 'flex';
 
-        // 3. Step 1 of Simulation: Pretend to deploy push command to device
+        // 3. Step 1 of Simulation: Update processing status texts
         setTimeout(() => {
             document.getElementById('mpesa-status-text').innerText = "STK Prompt Displayed on Phone! Processing payment...";
             document.getElementById('mpesa-status-text').style.color = "#ffeb3b";
         }, 1500);
 
-        // 4. Run html2canvas layout screenshot tool in the background
+        // 4. Run html2canvas layout screenshot generator in the background
         if (currentType === 'custom') {
             html2canvas(shirtTarget, { logging: false, useCORS: true }).then(canvas => {
                 canvas.toBlob(function(blob) {
@@ -497,27 +497,61 @@
                     dataTransfer.items.add(file);
                     document.getElementById('logo-upload').files = dataTransfer.files;
                     
-                    // Finalize after the mock checkout processing finishes
-                    finishSubmission();
+                    finishSimulationAndSend();
                 }, 'image/png');
             });
         } else {
-            // If plain order, skip snapshotting and run directly to the checkout delay completion
-            finishSubmission();
+            finishSimulationAndSend();
         }
 
-        function finishSubmission() {
+        function finishSimulationAndSend() {
             setTimeout(() => {
                 document.getElementById('mpesa-status-text').innerText = "Payment Verified! Forwarding Order...";
                 document.getElementById('mpesa-status-text').style.color = "#28a745";
                 
                 setTimeout(() => {
-                    mpesaModal.style.display = 'none'; // Hide overlay window safely
-                    form.submit(); // Fire form off to Formspree
+                    mpesaModal.style.display = 'none'; // Close M-Pesa screen
+                    
+                    // --- NEW: AJAX FORMSPREE SUBMISSION BACKGROUND ENGINE ---
+                    const formData = new FormData(form);
+                    
+                    // Change status text on the main order button so they know it's processing
+                    const submitBtn = form.querySelector('.submit-order-btn');
+                    const originalBtnText = submitBtn.innerText;
+                    submitBtn.innerText = "Processing Order Setup...";
+                    submitBtn.disabled = true;
+
+                    fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Clear form fields
+                            form.reset();
+                            setOrderType('plain'); // Reset view to default
+                            
+                            // Show custom beautiful success notification alert
+                            alert("🎉 Order Successful!\n\nThank you for choosing Bensoft Prints. We have received your design requirements and payment details. Our team will contact you shortly!");
+                        } else {
+                            alert("Oops! There was a problem submitting your order. Please try again.");
+                        }
+                    })
+                    .catch(error => {
+                        alert("Oops! Network connection issue. Please try again.");
+                    })
+                    .finally(() => {
+                        // Re-enable and restore button states safely
+                        submitBtn.innerText = originalBtnText;
+                        submitBtn.disabled = false;
+                    });
+
                 }, 1000);
-            }, 3500); // 3.5 seconds total practice processing delay simulation
+            }, 3500);
         }
     });
 </script>
 </body>
 </html>
+
