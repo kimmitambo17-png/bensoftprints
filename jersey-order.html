@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bensoft Prints - Premium Kit Customizer</title>
-    <!-- Include html2canvas for mockup generation -->
+    <title>Bensoft Prints - Authentic Football Kit Studio</title>
+    <!-- Include html2canvas for backend mockup rendering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -13,7 +13,8 @@
             --card-bg: #1e1e1e;
             --text-light: #ffffff;
             --text-gray: #aaaaaa;
-            --jersey-base: #034694; /* Default Chelsea Blue */
+            /* Dynamic Kit System Hex Codes */
+            --jersey-base: #034694; 
             --jersey-accent: #ffffff;
         }
 
@@ -37,7 +38,7 @@
             .container { grid-template-columns: 1fr; }
         }
 
-        /* Clean Studio Preview View Box */
+        /* Clean Studio Photographic Preview Box */
         .preview-box {
             background: #161616;
             border-radius: 12px;
@@ -47,116 +48,64 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            min-height: 500px;
+            min-height: 520px;
             border: 1px solid #252525;
         }
 
-        /* Realistic CSS Jersey Template Silhouette */
-        .jersey-wrapper {
+        /* The Premium Photographic Render Canvas */
+        .jersey-studio-display {
             position: relative;
-            width: 280px;
-            height: 320px;
-            margin-top: 20px;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
-        }
-
-        /* Dynamic Main Torso Mesh */
-        .jersey-body {
-            position: absolute;
-            top: 40px;
-            left: 45px;
-            width: 190px;
-            height: 280px;
+            width: 320px;
+            height: 380px;
             background-color: var(--jersey-base);
-            border-radius: 4px 4px 0 0;
-            transition: background-color 0.3s ease;
-            z-index: 2;
-            /* Creates a premium fabric texture overlay with realistic inner shading folds */
-            background-image: 
-                linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.15) 100%),
-                linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.3) 100%);
+            /* Premium unbranded transparent mesh texture with shadow map overlays */
+            background-image: url('https://i.imgur.com/YXZmG9G.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: background-color 0.4s ease;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7));
         }
 
-        /* Left Sleeve */
-        .jersey-body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -40px;
-            width: 45px;
-            height: 95px;
-            background-color: var(--jersey-base);
-            transform: rotate(28deg);
-            transform-origin: top right;
-            border-radius: 4px 0 0 8px;
-            border-bottom: 8px solid var(--jersey-accent);
-            background-image: linear-gradient(115deg, rgba(0,0,0,0.2) 0%, transparent 60%);
-        }
-
-        /* Right Sleeve */
-        .jersey-body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -40px;
-            width: 45px;
-            height: 95px;
-            background-color: var(--jersey-base);
-            transform: rotate(-28deg);
-            transform-origin: top left;
-            border-radius: 0 4px 8px 0;
-            border-bottom: 8px solid var(--jersey-accent);
-            background-image: linear-gradient(-115deg, rgba(0,0,0,0.2) 0%, transparent 60%);
-        }
-
-        /* Clean Athletic Crew/V-Neck Collar design */
-        .jersey-collar {
-            position: absolute;
-            top: 36px;
-            left: 100px;
-            width: 80px;
-            height: 24px;
-            background-color: var(--jersey-accent);
-            border-radius: 0 0 40px 40px;
-            z-index: 4;
-            box-shadow: inset 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        /* Customizable Back Printing Area Alignment */
+        /* Alignment system for printed names and squad numbers */
         .jersey-printing {
             position: absolute;
-            top: 85px;
-            left: 45px;
-            width: 190px;
+            top: 72px; 
+            left: 0;
+            width: 100%;
             text-align: center;
-            z-index: 5;
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .jersey-name-display {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             font-weight: 800;
             text-transform: uppercase;
             color: var(--jersey-accent);
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             font-family: 'Impact', Arial Black, sans-serif; 
-            min-height: 25px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            padding: 0 10px;
-            word-wrap: break-word;
+            max-width: 75%;
+            transform: perspective(300px) rotateX(12deg); /* Form-fitting athletic angle */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            transition: color 0.3s ease, font-family 0.2s ease;
         }
 
         .jersey-number-display {
-            font-size: 5.5rem;
+            font-size: 6.5rem;
             font-weight: 900;
             font-family: 'Impact', Arial Black, sans-serif;
             color: var(--jersey-accent);
             line-height: 1;
-            margin-top: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            margin-top: 12px;
+            transform: perspective(300px) rotateX(6deg);
+            text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+            transition: color 0.3s ease, font-family 0.2s ease;
         }
 
-        /* Customizer Controls Panel */
+        /* Form Controls Setup Panels */
         .form-box {
             background: var(--card-bg);
             border-radius: 12px;
@@ -165,7 +114,6 @@
         }
 
         h2 { margin-top: 0; color: var(--text-light); font-size: 1.6rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px;}
-        
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-gray); font-size: 0.9rem; }
         
@@ -173,26 +121,13 @@
             width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #444; background: #2a2a2a; color: #fff; box-sizing: border-box; font-size: 1rem;
         }
 
-        /* Category Tab Buttons style matching official stores */
+        /* Category Tab Button Switchers */
         .type-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
         .toggle-btn { flex: 1; padding: 12px; background: #2a2a2a; border: 1px solid #444; color: #aaa; text-align: center; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
         .toggle-btn.active { background: #fff; color: #111; border-color: #fff; }
 
-        .conditional-section {
-            background: #252525;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .editor-section {
-            background: #1a2a1a;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #ffeb3b;
-            margin-bottom: 20px;
-        }
+        .conditional-section { background: #252525; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color); margin-bottom: 20px; }
+        .editor-section { background: #1a2a1a; padding: 15px; border-radius: 8px; border-left: 4px solid #ffeb3b; margin-bottom: 20px; }
 
         .color-pickers { display: flex; gap: 10px; margin-top: 5px; }
         .color-dot { width: 35px; height: 35px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
@@ -206,7 +141,7 @@
 </head>
 <body>
 
-<!-- M-Pesa Processing Modal Overlay -->
+<!-- M-Pesa Simulated Native Modal Window Overlay -->
 <div id="mpesa-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
     <div style="background: #1e1e1e; color: #fff; width: 320px; border-radius: 12px; padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 2px solid #4ca64c;">
         <div style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
@@ -217,35 +152,32 @@
             <p style="margin: 5px 0;"><strong>Amount:</strong> KSh 400.00</p>
             <p style="margin: 5px 0;"><strong>Account:</strong> <span id="mpesa-phone-display">07XXXXXXXX</span></p>
             <hr style="border: 0; border-top: 1px dashed #444; margin: 15px 0;">
-            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.85rem;">[STK PUSH RUNNING]</p>
+            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.85rem;">[STK PUSH SIMULATION ACTIVE]</p>
         </div>
         <div style="text-align: center; color: #4ca64c; font-weight: bold; font-size: 0.9rem;" id="mpesa-status-text">
-            Sending STK Push Prompt...
+            Initializing STK Push...
         </div>
     </div>
 </div>
 
 <div class="container">
-    <!-- LEFT PANEL: Realistic Premium Silhouette Canvas -->
+    <!-- LEFT PANEL: Realistic Image Canvas Studio Rendering Map -->
     <div class="preview-box" id="capture-zone">
-        <div class="jersey-wrapper">
-            <div class="jersey-collar" id="canvas-collar"></div>
-            <div class="jersey-body" id="canvas-body"></div>
+        <div class="jersey-studio-display" id="canvas-jersey">
             <div class="jersey-printing">
                 <div class="jersey-name-display" id="preview-name-txt">YOUR NAME</div>
                 <div class="jersey-number-display" id="preview-number-txt">7</div>
             </div>
         </div>
-        <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 40px; font-style: italic;">Realistic Back-Printing Mockup Preview</p>
+        <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 25px; font-style: italic;">Premium Studio Customizer Preview</p>
     </div>
 
-    <!-- RIGHT PANEL: Customizer Interface Options -->
+    <!-- RIGHT PANEL: Configurator Options -->
     <div class="form-box">
         <h2>Match Day Kit Customizer</h2>
         
         <form id="jerseyOrderForm" action="https://formspree.io/f/xvggpzel" method="POST">
             
-            <!-- CATEGORY TAB SELECTION CONTROLS -->
             <div class="form-group">
                 <label>Select Customisation Mode</label>
                 <div class="type-toggle">
@@ -255,10 +187,10 @@
                 <input type="hidden" name="Kit Track Category" id="kit-track-input" value="plain">
             </div>
 
-            <!-- TAB 1: PLAIN CUSTOM BASES -->
+            <!-- TRACK A: SOLID FABRIC SELECTION CHANNELS -->
             <div id="section-track-plain" class="conditional-section">
                 <div class="form-group">
-                    <label>Choose Jersey Fabric Base Color</label>
+                    <label>Choose Fabric Base Color</label>
                     <div class="color-pickers">
                         <div class="color-dot active" style="background: #034694;" onclick="changeCustomColors('#034694', '#ffffff', this)"></div>
                         <div class="color-dot" style="background: #cc0000;" onclick="changeCustomColors('#cc0000', '#ffffff', this)"></div>
@@ -266,29 +198,29 @@
                         <div class="color-dot" style="background: #ffffff;" onclick="changeCustomColors('#ffffff', '#111111', this)"></div>
                         <div class="color-dot" style="background: #111111;" onclick="changeCustomColors('#111111', '#ffffff', this)"></div>
                     </div>
-                    <input type="hidden" name="Plain Custom Color Base" id="plain-base-input" value="#034694">
-                    <input type="hidden" name="Plain Custom Color Font" id="plain-font-input" value="#ffffff">
+                    <input type="hidden" name="Plain Custom Base Color" id="plain-base-input" value="#034694">
+                    <input type="hidden" name="Plain Custom Font Color" id="plain-font-input" value="#ffffff">
                 </div>
             </div>
 
-            <!-- TAB 2: EXPANDED LEAGUE & CLUBS MULTIPLEXER -->
+            <!-- TRACK B: COMPREHENSIVE TEAM ROSTER CHANNELS -->
             <div id="section-track-team" class="conditional-section" style="display: none;">
                 <div class="form-group">
-                    <label>Choose Championship Tournament / League</label>
+                    <label>Choose Tournament League / Category</label>
                     <select id="league-select" name="Target League" onchange="updateTeamDropdown()">
                         <option value="">-- Choose League --</option>
                         <option value="Premier League">Premier League</option>
                         <option value="LaLiga">LaLiga</option>
                         <option value="Bundesliga">Bundesliga</option>
                         <option value="Serie A">Serie A</option>
-                        <option value="World Cup">World Cup Nationals</option>
+                        <option value="World Cup Nationals">World Cup Nationals</option>
                     </select>
                 </div>
 
                 <div class="form-group" id="group-team-select" style="display: none;">
                     <label>Select Club / Squad Team</label>
                     <select id="team-select" name="Selected Team" onchange="applyTeamKitColors()">
-                        <!-- Dynamic Options loaded by JS matrix -->
+                        <!-- JS dynamically inserts matching nodes -->
                     </select>
                 </div>
 
@@ -302,7 +234,7 @@
                 </div>
             </div>
 
-            <!-- UNIVERSAL LABELLING TEXT CONFIGURATION SYSTEM -->
+            <!-- UNIVERSAL VINYL DESIGN LABELS EDITOR PANEL -->
             <div class="editor-section">
                 <label style="color: #ffeb3b; font-weight: bold; margin-bottom: 10px; display: block;">Back-Print Customisation</label>
                 
@@ -329,7 +261,7 @@
 
             <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
 
-            <!-- ORDER ROUTING META FIELDS -->
+            <!-- DATA PASS CONTROL NODES -->
             <div class="form-group">
                 <label>Your Full Name</label>
                 <input type="text" name="Client Name" required placeholder="e.g. Mitambo Kelvin">
@@ -351,21 +283,21 @@
 </div>
 
 <script>
-    // Comprehensive Club Databank Matrix Mapping
+    // Full League Databank Real Kits Matrix 
     const leagueData = {
-        "Premier League": ["Arsenal", "Aston Villa", "Chelsea", "Crystal Palace", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", "Tottenham Hotspur", "West Ham United"],
-        "LaLiga": ["Athletic Bilbao", "Atletico Madrid", "Barcelona", "Girona", "Real Madrid", "Real Sociedad", "Sevilla", "Valencia"],
-        "Bundesliga": ["Bayer Leverkusen", "Bayern Munich", "Borussia Dortmund", "Eintracht Frankfurt", "RB Leipzig", "VfB Stuttgart"],
-        "Serie A": ["Atalanta", "Inter Milan", "Juventus", "Lazio", "AS Roma", "AC Milan", "Napoli"],
-        "World Cup": ["Argentina", "Brazil", "France", "England", "Germany", "Portugal", "Spain", "Kenya (Harambee Stars)"]
+        "Premier League": ["Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton", "Chelsea", "Crystal Palace", "Everton", "Fulham", "Ipswich Town", "Leicester City", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", "Nottingham Forest", "Southampton", "Tottenham Hotspur", "West Ham United", "Wolverhampton Wanderers"],
+        "LaLiga": ["Athletic Bilbao", "Atletico Madrid", "Barcelona", "Celta Vigo", "Deportivo Alaves", "Espanyol", "Getafe", "Girona", "Las Palmas", "Leganes", "Mallorca", "Osasuna", "Rayo Vallecano", "Real Betis", "Real Madrid", "Real Sociedad", "Sevilla", "Valencia", "Valladolid", "Villarreal"],
+        "Bundesliga": ["Augsburg", "Bayer Leverkusen", "Bayern Munich", "Bochum", "Borussia Dortmund", "Borussia Monchengladbach", "Eintracht Frankfurt", "Freiburg", "Heidenheim", "Hoffenheim", "Holstein Kiel", "Mainz 05", "RB Leipzig", "St. Pauli", "VfB Stuttgart", "Werder Bremen", "Wolfsburg", "Union Berlin"],
+        "Serie A": ["Atalanta", "Bologna", "Cagliari", "Como", "Empoli", "Fiorentina", "Genoa", "Inter Milan", "Juventus", "Lazio", "Lecce", "Monza", "Napoli", "Parma", "AS Roma", "Torino", "Udinese", "Venezia", "Verona", "AC Milan"],
+        "World Cup Nationals": ["Argentina", "Brazil", "France", "England", "Germany", "Italy", "Spain", "Portugal", "Netherlands", "Morocco", "Nigeria", "Ghana", "Cameroon", "Japan", "USA", "Kenya (Harambee Stars)"]
     };
 
-    // Color Profiles for Official Teams (Base Color, Printing Text/Accent Font Color)
+    // Realistic Team Kit Mapping Colors (Base Fabric, Accent Text Printing Overlay Color)
     const teamKitColors = {
         "Chelsea": {
             "Home Kit": { base: "#034694", font: "#ffffff" },
-            "Away Kit": { base: "#ffffff", font: "#034694" },
-            "3rd Kit": { base: "#111111", font: "#pink" }
+            "Away Kit": { base: "#f0f0f0", font: "#034694" },
+            "3rd Kit": { base: "#111111", font: "#ec589a" }
         },
         "Arsenal": {
             "Home Kit": { base: "#ef0107", font: "#ffffff" },
@@ -407,6 +339,31 @@
             "Away Kit": { base: "#111111", font: "#fde100" },
             "3rd Kit": { base: "#fde100", font: "#111111" }
         },
+        "Juventus": {
+            "Home Kit": { base: "#ffffff", font: "#111111" },
+            "Away Kit": { base: "#ffd700", font: "#111111" },
+            "3rd Kit": { base: "#111111", font: "#ffffff" }
+        },
+        "AC Milan": {
+            "Home Kit": { base: "#cc0000", font: "#ffffff" },
+            "Away Kit": { base: "#ffffff", font: "#cc0000" },
+            "3rd Kit": { base: "#2a2a2a", font: "#cc0000" }
+        },
+        "Inter Milan": {
+            "Home Kit": { base: "#004d98", font: "#ffffff" },
+            "Away Kit": { base: "#ffffff", font: "#004d98" },
+            "3rd Kit": { base: "#ffeb3b", font: "#111111" }
+        },
+        "Argentina": {
+            "Home Kit": { base: "#75aadb", font: "#ffffff" },
+            "Away Kit": { base: "#1c2c5b", font: "#ffffff" },
+            "3rd Kit": { base: "#ffffff", font: "#75aadb" }
+        },
+        "Brazil": {
+            "Home Kit": { base: "#fde100", font: "#002776" },
+            "Away Kit": { base: "#002776", font: "#fde100" },
+            "3rd Kit": { base: "#228b22", font: "#ffffff" }
+        },
         "Kenya (Harambee Stars)": {
             "Home Kit": { base: "#cc0000", font: "#ffffff" },
             "Away Kit": { base: "#ffffff", font: "#cc0000" },
@@ -422,10 +379,7 @@
         if (track === 'plain') {
             document.getElementById('section-track-plain').style.display = 'block';
             document.getElementById('section-track-team').style.display = 'none';
-            
-            const baseColor = document.getElementById('plain-base-input').value;
-            const fontColor = document.getElementById('plain-font-input').value;
-            updateVisualColors(baseColor, fontColor);
+            updateVisualColors(document.getElementById('plain-base-input').value, document.getElementById('plain-font-input').value);
         } else {
             document.getElementById('section-track-plain').style.display = 'none';
             document.getElementById('section-track-team').style.display = 'block';
@@ -466,8 +420,8 @@
             const config = teamKitColors[currentSelectedTeam][currentEdition];
             updateVisualColors(config.base, config.font);
         } else {
-            // Default elegant gray setup for unmapped teams
-            updateVisualColors("#333333", "#ffffff");
+            // Default elegant fallback for items not heavily mapped with distinct secondary kit lines
+            updateVisualColors("#222222", "#ffffff");
         }
     }
 
@@ -482,12 +436,8 @@
     }
 
     function updateVisualColors(baseHex, fontHex) {
-        // Set variables on the document root styles to update jersey and pseudo elements instantly
         document.documentElement.style.setProperty('--jersey-base', baseHex);
         document.documentElement.style.setProperty('--jersey-accent', fontHex);
-        
-        document.getElementById('preview-name-txt').style.color = fontHex;
-        document.getElementById('preview-number-txt').style.color = fontHex;
     }
 
     function updateJerseyName(val) {
@@ -503,7 +453,7 @@
         document.getElementById('preview-number-txt').style.fontFamily = fontFamilyString;
     }
 
-    // --- SUBMISSION M-PESA POP ENGINE ---
+    // --- AUTOMATED SUBMISSION PIPELINE ---
     document.getElementById('jerseyOrderForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -516,7 +466,7 @@
         mpesaModal.style.display = 'flex';
 
         setTimeout(() => {
-            document.getElementById('mpesa-status-text').innerText = "STK Prompt Sent! Awaiting PIN validation...";
+            document.getElementById('mpesa-status-text').innerText = "STK Prompt Sent! Confirm payment on phone...";
             document.getElementById('mpesa-status-text').style.color = "#ffeb3b";
         }, 2000);
 
@@ -543,7 +493,7 @@
 
         function finishOrder() {
             setTimeout(() => {
-                document.getElementById('mpesa-status-text').innerText = "Payment Received! Processing Customizer Output...";
+                document.getElementById('mpesa-status-text').innerText = "Payment Verified! Sending Layout Profile...";
                 document.getElementById('mpesa-status-text').style.color = "#28a745";
                 
                 setTimeout(() => {
@@ -551,7 +501,7 @@
                     
                     const formData = new FormData(form);
                     const submitBtn = form.querySelector('.submit-order-btn');
-                    submitBtn.innerText = "Transmitting Order Layout...";
+                    submitBtn.innerText = "Transmitting Layout Data...";
                     submitBtn.disabled = true;
 
                     fetch(form.action, {
@@ -566,13 +516,13 @@
                             document.getElementById('input-back-name').value = "";
                             updateJerseyName("");
                             updateJerseyNumber("7");
-                            alert("🎉 Mockup Layout Shared Successfully!\n\nThank you for choosing Bensoft Prints. Your tailored mockup profile has been locked in and payment checked out successfully. Production will be updated shortly!");
+                            alert("🎉 Custom Jersey Order Sent Successfully!\n\nYour mockup preview screenshot and payment details have been logged. The production team will be in touch shortly.");
                         } else {
                             alert("Submission processing error. Please try again.");
                         }
                     })
                     .catch(error => {
-                        alert("Network connectivity drop. Please check your link connection.");
+                        alert("Network connectivity issue. Please check your connection.");
                     })
                     .finally(() => {
                         submitBtn.innerText = "Forward Configured Jersey Order";
