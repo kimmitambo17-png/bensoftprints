@@ -467,27 +467,55 @@
     }
 
     // --- NEW SNAPSHOT GENERATOR CODE ---
+    // --- UPDATED SUBMISSION FLOW WITH MPESA SIMULATION ---
     document.getElementById('tshirtOrderForm').addEventListener('submit', function(e) {
-        // If they chose custom, generate the mockup snapshot file dynamically
-        if (currentType === 'custom') {
-            e.preventDefault(); // Pause form submission for a second to capture image
-            const form = this;
-            const shirtTarget = document.getElementById('canvas-shirt');
+        e.preventDefault(); // Stop the form from sending instantly to let our simulation run
+        
+        const form = this;
+        const customerPhone = document.getElementById('cust-phone').value;
+        const shirtTarget = document.getElementById('canvas-shirt');
+        const mpesaModal = document.getElementById('mpesa-modal');
+        
+        // 1. Show the customer's typed mobile number inside our mock M-Pesa screen
+        document.getElementById('mpesa-phone-display').innerText = customerPhone || "Customer Device";
+        
+        // 2. Open the overlay
+        mpesaModal.style.display = 'flex';
 
+        // 3. Step 1 of Simulation: Pretend to deploy push command to device
+        setTimeout(() => {
+            document.getElementById('mpesa-status-text').innerText = "STK Prompt Displayed on Phone! Processing payment...";
+            document.getElementById('mpesa-status-text').style.color = "#ffeb3b";
+        }, 1500);
+
+        // 4. Run html2canvas layout screenshot tool in the background
+        if (currentType === 'custom') {
             html2canvas(shirtTarget, { logging: false, useCORS: true }).then(canvas => {
                 canvas.toBlob(function(blob) {
-                    // Create a virtual file attachment named "tshirt-design.png"
                     const file = new File([blob], "tshirt-design.png", { type: "image/png" });
-                    
-                    // Inject it directly into the file upload slot automatically
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(file);
                     document.getElementById('logo-upload').files = dataTransfer.files;
-
-                    // Resume form submission safely
-                    form.submit();
+                    
+                    // Finalize after the mock checkout processing finishes
+                    finishSubmission();
                 }, 'image/png');
             });
+        } else {
+            // If plain order, skip snapshotting and run directly to the checkout delay completion
+            finishSubmission();
+        }
+
+        function finishSubmission() {
+            setTimeout(() => {
+                document.getElementById('mpesa-status-text').innerText = "Payment Verified! Forwarding Order...";
+                document.getElementById('mpesa-status-text').style.color = "#28a745";
+                
+                setTimeout(() => {
+                    mpesaModal.style.display = 'none'; // Hide overlay window safely
+                    form.submit(); // Fire form off to Formspree
+                }, 1000);
+            }, 3500); // 3.5 seconds total practice processing delay simulation
         }
     });
 </script>
