@@ -3,777 +3,742 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bensoft Prints - Authentic Football Kit Studio</title>
-    <!-- Include html2canvas for backend mockup rendering -->
+    <title>Bensoft Prints - Advanced Kit Studio Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --primary-color: #218838;
-            --dark-bg: #121212;
-            --card-bg: #1e1e1e;
-            --text-light: #ffffff;
-            --text-gray: #aaaaaa;
+            --dark-bg: #0f1115;
+            --card-bg: #161920;
+            --panel-border: #262c3a;
+            --text-light: #f8fafc;
+            --text-gray: #94a3b8;
             
-            /* Dynamic Kit Variables */
-            --jersey-body: #ef0107; 
-            --jersey-sleeves: #ffffff;
-            --jersey-trim: #ffffff;
+            /* 25/26 Dynamic Kit Engine State */
+            --jersey-base: #da291c; 
+            --jersey-accent: #ffffff;
+            --jersey-secondary: #ffffff;
             --jersey-text: #ffffff;
-            --stripe-display: none;
-            --stripe-color: rgba(255, 255, 255, 0.2);
+            --stripe-pattern: none;
+            --stripe-color: rgba(255, 255, 255, 0.15);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-light);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
+        /* High-Efficiency Expanded Asymmetrical Dashboard */
+        .dashboard-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 38% 62%;
+            width: 100vw;
+            height: 100vh;
         }
 
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
+        @media (max-width: 1024px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
         }
 
-        /* Photographic Preview Box */
-        .preview-box {
-            background: #161616;
-            border-radius: 12px;
-            padding: 20px;
+        /* LEFT SIDEBAR: Sticky Interactive Graphics Engine */
+        .preview-sidebar {
+            background: #0b0d10;
+            border-right: 1px solid var(--panel-border);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 40px 20px;
             position: relative;
-            min-height: 520px;
-            border: 1px solid #252525;
-            overflow: hidden;
+            box-sizing: border-box;
         }
 
-        /* --- MODERN 2.5D VECTOR JERSEY SHAPE ENGINE --- */
-        .jersey-container {
+        /* --- UNIFIED 2.5D SHIRT GEOMETRY ARCHITECTURE --- */
+        .jersey-viewport {
             position: relative;
-            width: 320px;
-            height: 360px;
+            width: 100%;
+            max-width: 380px;
+            aspect-ratio: 1 / 1;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            margin-top: 20px;
+            align-items: center;
         }
 
-        /* Curved, Natural Main Torso Panel */
-        .jersey-body-panel {
+        /* Uses a precise structural path mapping both body & sleeves as a synchronized unit */
+        .unified-shirt-frame {
             position: relative;
-            width: 160px;
-            height: 240px;
-            background-color: var(--jersey-body);
-            /* Gives the kit natural curved shoulders and waist tapering */
-            border-radius: 40px 40px 15px 15px;
-            box-shadow: 
-                inset 0 20px 20px rgba(255,255,255,0.15), 
-                inset 0 -15px 25px rgba(0,0,0,0.3), 
-                0 15px 30px rgba(0,0,0,0.5);
-            z-index: 3;
-            transition: background-color 0.3s ease;
+            width: 340px;
+            height: 340px;
+            background-color: var(--jersey-base);
+            clip-path: polygon(
+                28% 0%, 72% 0%, 
+                76% 8%, 98% 22%, 88% 38%, 
+                78% 32%, 78% 94%, 22% 94%, 
+                22% 32%, 12% 38%, 2% 22%, 24% 8%
+            );
+            box-shadow: inset 0 25px 30px rgba(255,255,255,0.12), inset 0 -20px 30px rgba(0,0,0,0.4);
+            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
         }
 
-        /* Fabric Texture & Stripe Pattern Overlay */
-        .jersey-stripes-overlay {
-            display: var(--stripe-display);
+        /* Dynamic Sleeve Accent Panels */
+        .unified-shirt-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 15% 20%, var(--jersey-accent) 14%, transparent 14.5%),
+                        radial-gradient(circle at 85% 20%, var(--jersey-accent) 14%, transparent 14.5%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* 25/26 Micro-Weave Fabric & Stripe Layer */
+        .fabric-texture-matrix {
+            display: var(--stripe-pattern);
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, 
-                var(--stripe-color) 12%, transparent 12%, 
-                transparent 44%, var(--stripe-color) 44%, 
-                var(--stripe-color) 56%, transparent 56%, 
-                transparent 88%, var(--stripe-color) 88%);
+                var(--stripe-color) 15%, transparent 15%, 
+                transparent 47%, var(--stripe-color) 47%, 
+                var(--stripe-color) 53%, transparent 53%, 
+                transparent 85%, var(--stripe-color) 85%);
             pointer-events: none;
-            z-index: 4;
+            z-index: 3;
         }
 
-        /* Realistic Curved Crew Neck Collar */
-        .jersey-collar-patch {
+        /* Ergonomic Neck Collar Cutout */
+        .crew-collar-mould {
             position: absolute;
             top: -2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 68px;
-            height: 28px;
-            background-color: var(--jersey-trim);
-            border-radius: 0 0 35px 35px;
+            width: 84px;
+            height: 32px;
+            background-color: var(--jersey-secondary);
+            border-radius: 0 0 40px 40px;
             z-index: 5;
-            box-shadow: inset 0 -4px 6px rgba(0,0,0,0.25);
-            transition: background-color 0.3s ease;
+            box-shadow: inset 0 -5px 8px rgba(0,0,0,0.3);
         }
         
-        .jersey-collar-inner {
+        .collar-interior-shadow {
             position: absolute;
             top: -2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 52px;
-            height: 18px;
-            background-color: #161616;
-            border-radius: 0 0 25px 25px;
+            width: 64px;
+            height: 20px;
+            background-color: #0b0d10;
+            border-radius: 0 0 30px 30px;
             z-index: 6;
         }
 
-        /* Ergonomic Left Sleeve Assembly */
-        .sleeve-left {
-            position: absolute;
-            top: 12px;
-            right: 146px; 
-            width: 55px;
-            height: 95px;
-            background-color: var(--jersey-sleeves);
-            border-radius: 18px 0 8px 25px;
-            transform-origin: top right;
-            transform: rotate(32deg);
-            z-index: 2;
-            box-shadow: inset 10px 10px 15px rgba(0,0,0,0.15), -5px 8px 12px rgba(0,0,0,0.3);
-            border-bottom: 8px solid var(--jersey-trim);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        /* Ergonomic Right Sleeve Assembly */
-        .sleeve-right {
-            position: absolute;
-            top: 12px;
-            left: 146px;
-            width: 55px;
-            height: 95px;
-            background-color: var(--jersey-sleeves);
-            border-radius: 0 18px 25px 8px;
-            transform-origin: top left;
-            transform: rotate(-32deg);
-            z-index: 2;
-            box-shadow: inset -10px 10px 15px rgba(0,0,0,0.15), 5px 8px 12px rgba(0,0,0,0.3);
-            border-bottom: 8px solid var(--jersey-trim);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        /* Global 3D Fabric Lighting Mapping Overlay */
-        .fabric-shading-overlay {
+        /* Ambient Ray-Traced Shadow Overlay */
+        .ambient-occlusion-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.12) 50%, rgba(0,0,0,0.22) 100%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.22) 0%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, rgba(0,0,0,0.28) 100%),
+                        linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 40%, rgba(0,0,0,0.35) 100%);
             pointer-events: none;
-            z-index: 5;
+            z-index: 4;
         }
 
-        /* Vinyl Print Workspace Placement Layer */
-        .jersey-printing {
+        /* Core Personalisation Print Coordinates */
+        .print-plane {
             position: absolute;
-            top: 50px; 
+            top: 85px; 
             left: 0;
             width: 100%;
-            text-align: center;
-            pointer-events: none;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 10;
+            pointer-events: none;
         }
 
-        .jersey-name-display {
-            font-size: 1.1rem;
-            font-weight: 800;
+        .print-name {
+            font-size: 1.3rem;
+            font-weight: 900;
             text-transform: uppercase;
             color: var(--jersey-text);
-            letter-spacing: 2px;
-            font-family: 'Impact', Arial Black, sans-serif; 
-            max-width: 85%;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.7);
-            transition: color 0.3s ease, font-family 0.2s ease;
+            letter-spacing: 3px;
+            font-family: 'Impact', sans-serif;
+            max-width: 65%;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+            text-align: center;
         }
 
-        .jersey-number-display {
-            font-size: 5.2rem;
+        .print-number {
+            font-size: 6.8rem;
             font-weight: 900;
-            font-family: 'Impact', Arial Black, sans-serif;
+            font-family: 'Impact', sans-serif;
             color: var(--jersey-text);
-            line-height: 1;
-            margin-top: 12px;
-            text-shadow: 0 3px 6px rgba(0,0,0,0.8);
-            transition: color 0.3s ease, font-family 0.2s ease;
+            line-height: 0.9;
+            margin-top: 15px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.7);
         }
 
-        /* Form Customizer Workspace Panels */
-        .form-box {
+        /* RIGHT PANEL: Maximised Workspace Configuration Engine */
+        .workspace-deck {
+            padding: 40px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .workspace-deck { padding: 20px; }
+        }
+
+        h2 { 
+            margin: 0 0 30px 0; 
+            font-size: 1.8rem; 
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 15px;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 640px) {
+            .control-grid { grid-template-columns: 1fr; }
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input[type="text"], input[type="number"], input[type="tel"] {
+            background-color: #1c202c;
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 14px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        select:focus, input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .mode-selector {
+            display: flex;
+            background: #12141a;
+            padding: 6px;
+            border-radius: 10px;
+            gap: 4px;
+            margin-bottom: 30px;
+        }
+
+        .mode-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            transition: all 0.2s ease;
+        }
+
+        .mode-tab.active {
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .editor-node {
             background: var(--card-bg);
+            border: 1px solid var(--panel-border);
             border-radius: 12px;
-            padding: 25px;
-            border: 1px solid #333;
+            padding: 30px;
+            margin-bottom: 35px;
         }
 
-        h2 { margin-top: 0; color: var(--text-light); font-size: 1.6rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 8px;}
-        .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text-gray); font-size: 0.9rem; }
-        
-        input[type="text"], input[type="tel"], select, input[type="number"] {
-            width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #444; background: #2a2a2a; color: #fff; box-sizing: border-box; font-size: 1rem;
+        .checkout-node {
+            background: linear-gradient(135deg, #16221f 0%, #161920 100%);
+            border: 1px solid #1e3a2f;
+            border-radius: 12px;
+            padding: 30px;
         }
 
-        .type-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
-        .toggle-btn { flex: 1; padding: 12px; background: #2a2a2a; border: 1px solid #444; color: #aaa; text-align: center; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
-        .toggle-btn.active { background: #fff; color: #111; border-color: #fff; }
-
-        .conditional-section { background: #252525; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color); margin-bottom: 20px; }
-        .editor-section { background: #1a2a1a; padding: 15px; border-radius: 8px; border-left: 4px solid #ffeb3b; margin-bottom: 20px; }
-
-        .color-pickers { display: flex; gap: 10px; margin-top: 5px; }
-        .color-dot { width: 35px; height: 35px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .color-dot.active { border-color: #fff; transform: scale(1.1); }
-
-        .submit-order-btn {
-            width: 100%; background: var(--primary-color); color: white; padding: 14px; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px;
+        .action-dispatch-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-top: 15px;
         }
-        .submit-order-btn:hover { background: #1e7e34; }
+
+        .action-dispatch-btn:hover { background-color: #1a6f2c; }
     </style>
 </head>
 <body>
 
-<div id="mpesa-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="background: #1e1e1e; color: #fff; width: 320px; border-radius: 12px; padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 2px solid #4ca64c;">
-        <div style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
-            <span style="color: #4ca64c; font-weight: bold; font-size: 1.2rem;">LIPA NA M-PESA</span>
+<div id="mpesa-gateway" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,5,10,0.85); z-index: 99999; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+    <div style="background: #161920; color: #fff; width: 340px; border-radius: 16px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); border: 1px solid #2e7d32;">
+        <div style="text-align: center; border-bottom: 1px solid var(--panel-border); padding-bottom: 15px; margin-bottom: 20px;">
+            <span style="color: #4caf50; font-weight: 800; font-size: 1.3rem; letter-spacing: 0.5px;">LIPA NA M-PESA</span>
         </div>
-        <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
-            <p style="margin: 5px 0;"><strong>Pay Bill / Till:</strong> Bensoft Prints</p>
-            <p style="margin: 5px 0;"><strong>Amount:</strong> KSh 400.00</p>
-            <p style="margin: 5px 0;"><strong>Account:</strong> <span id="mpesa-phone-display">07XXXXXXXX</span></p>
-            <hr style="border: 0; border-top: 1px dashed #444; margin: 15px 0;">
-            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.85rem;">[STK PUSH SIMULATION ACTIVE]</p>
+        <div style="font-size: 1rem; line-height: 1.7; margin-bottom: 25px; color: #e2e8f0;">
+            <p style="margin: 6px 0;"><strong>Pay Bill Merchant:</strong> Bensoft Prints</p>
+            <p style="margin: 6px 0;"><strong>Tariff Remittance:</strong> KSh 400.00</p>
+            <p style="margin: 6px 0;"><strong>Subscriber Node:</strong> <span id="target-phone-mask">07XXXXXXXX</span></p>
+            <hr style="border: 0; border-top: 1px dashed var(--panel-border); margin: 20px 0;">
+            <p style="text-align: center; color: #64748b; font-style: italic; font-size: 0.85rem;">[Secure API Handshake Active]</p>
         </div>
-        <div style="text-align: center; color: #4ca64c; font-weight: bold; font-size: 0.9rem;" id="mpesa-status-text">
+        <div style="text-align: center; color: #4caf50; font-weight: 700; font-size: 0.95rem;" id="gateway-status-channel">
             Initializing STK Push...
         </div>
     </div>
 </div>
 
-<div class="container">
-    <!-- LEFT PANEL: High Performance Customizer Preview Engine Layout Area -->
-    <div class="preview-box" id="capture-zone">
-        <div class="jersey-container">
-            <!-- Left Arm Piece -->
-            <div class="sleeve-left"></div>
-            
-            <!-- Structural Torso Frame -->
-            <div class="jersey-body-panel">
-                <div class="jersey-collar-patch">
-                    <div class="jersey-collar-inner"></div>
+<div class="dashboard-layout">
+    
+    <div class="preview-sidebar" id="render-viewport-node">
+        <div class="jersey-viewport">
+            <div class="unified-shirt-frame">
+                <div class="crew-collar-mould">
+                    <div class="collar-interior-shadow"></div>
                 </div>
-                <div class="jersey-stripes-overlay"></div>
-                <div class="fabric-shading-overlay"></div>
+                <div class="fabric-texture-matrix"></div>
+                <div class="ambient-occlusion-overlay"></div>
                 
-                <div class="jersey-printing">
-                    <div class="jersey-name-display" id="preview-name-txt">YOUR NAME</div>
-                    <div class="jersey-number-display" id="preview-number-txt">7</div>
+                <div class="print-plane">
+                    <div class="print-name" id="jersey-name-mesh">YOUR NAME</div>
+                    <div class="print-number" id="jersey-number-mesh">7</div>
                 </div>
             </div>
-            
-            <!-- Right Arm Piece -->
-            <div class="sleeve-right"></div>
         </div>
-        <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 25px; font-style: italic;">Dynamic Studio Fabric Preview Canvas</p>
+        <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 30px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;">25/26 Integrated Mesh Structural Model</p>
     </div>
 
-    <!-- RIGHT PANEL: Customizer Setup Workspace Control Panel Dashboard -->
-    <div class="form-box">
-        <h2>Match Day Kit Customizer</h2>
+    <div class="workspace-deck">
+        <h2>2025/2026 Match-Day Production Workspace</h2>
         
-        <form id="jerseyOrderForm" action="https://formspree.io/f/xvggpzel" method="POST">
+        <form id="productionStreamForm" action="https://formspree.io/f/xvggpzel" method="POST">
             
-            <div class="form-group">
-                <label>Select Customisation Mode</label>
-                <div class="type-toggle">
-                    <div class="toggle-btn" id="btn-track-plain" onclick="switchTrack('plain')">Plain / Custom Base</div>
-                    <div class="toggle-btn active" id="btn-track-team" onclick="switchTrack('team')">Official Club Kit Layout</div>
-                </div>
-                <input type="hidden" name="Kit Track Category" id="kit-track-input" value="team">
+            <div class="mode-selector">
+                <div class="mode-tab" id="tab-custom" onclick="toggleModeChannel('custom')">Bespoke Monochrome Template</div>
+                <div class="mode-tab active" id="tab-official" onclick="toggleModeChannel('official')">Official 25/26 Club Profiles</div>
             </div>
+            <input type="hidden" name="Production Kit Route" id="route-hidden-bridge" value="official">
 
-            <!-- TRACK A: SOLID PLAIN CHANNELS CUSTOM BUILDER SYSTEM -->
-            <div id="section-track-plain" class="conditional-section" style="display: none;">
-                <div class="form-group">
-                    <label>Choose Fabric Base Color</label>
-                    <div class="color-pickers">
-                        <div class="color-dot active" style="background: #034694;" onclick="changeCustomColors('#034694', '#034694', '#ffffff', '#ffffff', 'none', '#fff', this)"></div>
-                        <div class="color-dot" style="background: #cc0000;" onclick="changeCustomColors('#cc0000', '#cc0000', '#ffffff', '#ffffff', 'none', '#fff', this)"></div>
-                        <div class="color-dot" style="background: #ffd700;" onclick="changeCustomColors('#ffd700', '#ffd700', '#111111', '#111111', 'none', '#000', this)"></div>
-                        <div class="color-dot" style="background: #ffffff;" onclick="changeCustomColors('#ffffff', '#ffffff', '#111111', '#111111', 'none', '#000', this)"></div>
-                        <div class="color-dot" style="background: #111111;" onclick="changeCustomColors('#111111', '#111111', '#ffffff', '#ffffff', 'none', '#fff', this)"></div>
+            <div id="wrapper-official-teams" class="editor-node">
+                <div class="control-grid">
+                    <div class="input-wrapper">
+                        <label>Federation League</label>
+                        <select id="ui-league-node" name="Federation Tier" onchange="synchronizeSquadDropdown()">
+                            <option value="Premier League">Premier League (England)</option>
+                            <option value="LaLiga">LaLiga (Spain)</option>
+                            <option value="Bundesliga">Bundesliga (Germany)</option>
+                            <option value="Serie A">Serie A (Italy)</option>
+                            <option value="International Matchday">International Matchday</option>
+                        </select>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Squad Selection</label>
+                        <select id="ui-squad-node" name="Assigned Squad" onchange="executeKitColorRefresh()">
+                            </select>
                     </div>
                 </div>
-            </div>
 
-            <!-- TRACK B: THEME MASTER DATABASE ROSTER SYSTEM -->
-            <div id="section-track-team" class="conditional-section">
-                <div class="form-group">
-                    <label>Choose Tournament League / Category</label>
-                    <select id="league-select" name="Target League" onchange="updateTeamDropdown()">
-                        <option value="Premier League">Premier League</option>
-                        <option value="LaLiga">LaLiga</option>
-                        <option value="Bundesliga">Bundesliga</option>
-                        <option value="Serie A">Serie A</option>
-                        <option value="World Cup Nationals">World Cup Nationals</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="group-team-select">
-                    <label>Select Club / Squad Team</label>
-                    <select id="team-select" name="Selected Team" onchange="applyTeamKitColors()">
-                        <!-- Handled dynamically by JS below -->
-                    </select>
-                </div>
-
-                <div class="form-group" id="group-kit-edition">
-                    <label>Select Kit Edition Variant</label>
-                    <select id="kit-edition-select" name="Kit Edition Variant" onchange="applyTeamKitColors()">
-                        <option value="Home Kit">Home Kit</option>
-                        <option value="Away Kit">Away Kit</option>
-                        <option value="3rd Kit">3rd Kit</option>
+                <div class="input-wrapper">
+                    <label>Kit Tier Variant</label>
+                    <select id="ui-tier-node" name="Kit Variation Tier" onchange="executeKitColorRefresh()">
+                        <option value="Home Edition">Home Edition</option>
+                        <option value="Away Edition">Away Edition</option>
+                        <option value="Alternative 3rd">Alternative 3rd</option>
                     </select>
                 </div>
             </div>
 
-            <!-- PRINT TEXT LABELS BOARD EDITOR CONTROLS PANEL -->
-            <div class="editor-section">
-                <label style="color: #ffeb3b; font-weight: bold; margin-bottom: 10px; display: block;">Back-Print Customisation</label>
+            <div class="editor-node">
+                <h3 style="margin: 0 0 20px 0; font-size: 1.1rem; color: #ffeb3b; text-transform: uppercase; letter-spacing: 0.5px;">Vector Back-Print Typographics</h3>
                 
-                <div class="form-group">
-                    <label>Custom Name (Max 14 characters)</label>
-                    <input type="text" id="input-back-name" name="Custom Print Name" placeholder="e.g. KEVIN" maxlength="14" oninput="updateJerseyName(this.value)">
+                <div class="control-grid">
+                    <div class="input-wrapper">
+                        <label>Surnames / Print Text</label>
+                        <input type="text" id="entry-name" name="Manifest Name Print" placeholder="e.g. KEVIN" maxlength="14" oninput="pushNameToMesh(this.value)">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label>Squad Number Placement</label>
+                        <input type="number" id="entry-number" name="Manifest Number Print" value="7" min="0" max="99" oninput="pushNumberToMesh(this.value)">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Squad Number (0 - 99)</label>
-                    <input type="number" id="input-back-number" name="Custom Print Number" value="7" min="0" max="99" oninput="updateJerseyNumber(this.value)">
-                </div>
-
-                <div class="form-group">
-                    <label>Select Font Style Profile</label>
-                    <select id="font-style-select" name="Custom Font Style" onchange="changeJerseyFont(this.value)">
-                        <option value="'Impact', Arial Black, sans-serif">Bold Premium Athletic (Impact)</option>
-                        <option value="'Courier New', Courier, monospace">Classic Retro Block (Courier)</option>
-                        <option value="'Segoe UI', Tahoma, sans-serif">Modern Streamlined (Segoe UI)</option>
+                <div class="input-wrapper">
+                    <label>Typography Font Geometry</label>
+                    <select id="ui-font-node" name="Typography Spec" onchange="adjustMeshFontFamily(this.value)">
+                        <option value="'Impact', sans-serif">25/26 Global Championship Block (Impact)</option>
+                        <option value="'Courier New', monospace">Retro Geometric Slab (Courier)</option>
+                        <option value="-apple-system, sans-serif">Modernist Sleek Linear (Sans-Serif)</option>
                     </select>
                 </div>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <div class="checkout-node">
+                <h3 style="margin: 0 0 20px 0; font-size: 1.1rem; color: #4caf50; text-transform: uppercase; letter-spacing: 0.5px;">Client Routing Protocols</h3>
+                
+                <div class="control-grid">
+                    <div class="input-wrapper">
+                        <label>Legal Recipient Name</label>
+                        <input type="text" name="Client Identity Token" required placeholder="e.g. Mitambo Kelvin">
+                    </div>
 
-            <!-- SECURE ENDPOINT CHECKOUT VERIFICATION TRANSMISSION NODES -->
-            <div class="form-group">
-                <label>Your Full Name</label>
-                <input type="text" name="Client Name" required placeholder="e.g. Mitambo Kelvin">
+                    <div class="input-wrapper">
+                        <label>M-Pesa Remittance Node Number</label>
+                        <input type="tel" id="gateway-phone-node" name="Mobile Remittance Target" required placeholder="e.g. 0712345678">
+                    </div>
+                </div>
+
+                <div class="control-grid" style="margin-bottom: 0; margin-top: 20px;">
+                    <div class="input-wrapper">
+                        <label>Invoice Fixed Unit Value</label>
+                        <input type="text" value="KSh 400.00" disabled style="font-weight: 700; color: #4caf50; background-color: #0b0d10;">
+                    </div>
+                    <button type="submit" class="action-dispatch-btn">Compile & Dispatch Order Package</button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>M-Pesa Mobile Number</label>
-                <input type="tel" id="cust-phone" name="Client Phone" required placeholder="e.g. 0712345678">
-            </div>
-
-            <div class="form-group">
-                <label>Total Secure Price</label>
-                <input type="text" value="KSh 400.00" disabled style="font-weight: bold; color: #4ca64c; background: #1a1a1a;">
-            </div>
-
-            <button type="submit" class="submit-order-btn">Forward Configured Jersey Order</button>
         </form>
     </div>
 </div>
 
 <script>
-    // Universal League Team Lists
-    const leagueData = {
-        "Premier League": ["Arsenal", "Chelsea", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", "Tottenham Hotspur", "West Ham United", "Aston Villa", "Everton"],
-        "LaLiga": ["Real Madrid", "Barcelona", "Atletico Madrid", "Girona", "Real Sociedad", "Sevilla", "Valencia", "Athletic Bilbao"],
-        "Bundesliga": ["Bayer Leverkusen", "Bayern Munich", "Borussia Dortmund", "RB Leipzig", "VfB Stuttgart", "Eintracht Frankfurt"],
-        "Serie A": ["Inter Milan", "Juventus", "AC Milan", "Napoli", "AS Roma", "Lazio", "Atalanta"],
-        "World Cup Nationals": ["Argentina", "Brazil", "France", "England", "Germany", "Portugal", "Spain", "Kenya (Harambee Stars)"]
+    // Comprehensive Matrix: Verified 2025/2026 Club Kit Colorways
+    const catalogLeagueRosters = {
+        "Premier League": ["Arsenal", "Chelsea", "Liverpool", "Manchester City", "Manchester United", "Ipswich Town", "Aston Villa"],
+        "LaLiga": ["Real Madrid", "Barcelona", "Atletico Madrid", "Girona", "Real Sociedad"],
+        "Bundesliga": ["Bayer Leverkusen", "Bayern Munich", "Borussia Dortmund", "RB Leipzig"],
+        "Serie A": ["Inter Milan", "Juventus", "AC Milan", "Napoli"],
+        "International Matchday": ["Kenya (Harambee Stars)", "Argentina", "Brazil", "France", "Germany"]
     };
 
-    // Full Color Matrix to Avoid Black Template Defaults
-    const teamKitColors = {
-        /* Premier League */
+    const matrixKitPalette2526 = {
+        /* Premier League 25/26 Profiles */
         "Arsenal": {
-            "Home Kit": { body: "#da291c", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#ffeb3b", font: "#ffeb3b", stripes: "block", scolor: "rgba(255,235,59,0.15)" },
-            "3rd Kit": { body: "#aaf0d1", sleeves: "#aaf0d1", trim: "#063672", font: "#063672", stripes: "none" }
+            "Home Edition": { base: "#da291c", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#000000", accent: "#aaf0d1", second: "#e32219", font: "#aaf0d1", pattern: "none" },
+            "Alternative 3rd": { base: "#aaf0d1", accent: "#063672", second: "#063672", font: "#063672", pattern: "none" }
         },
         "Chelsea": {
-            "Home Kit": { body: "#034694", sleeves: "#034694", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#f5f5f5", sleeves: "#f5f5f5", trim: "#034694", font: "#034694", stripes: "none" },
-            "3rd Kit": { body: "#000000", sleeves: "#000000", trim: "#ec589a", font: "#ec589a", stripes: "block", scolor: "rgba(236,88,154,0.15)" }
+            "Home Edition": { base: "#034694", accent: "#ffffff", second: "#e55b13", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#f2f4f7", accent: "#034694", second: "#e55b13", font: "#034694", pattern: "none" },
+            "Alternative 3rd": { base: "#000000", accent: "#ec589a", second: "#ec589a", font: "#ec589a", pattern: "block", scolor: "rgba(236,88,154,0.12)" }
         },
         "Liverpool": {
-            "Home Kit": { body: "#c8102e", sleeves: "#c8102e", trim: "#ffd700", font: "#ffd700", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#00b2a9", font: "#1c2321", stripes: "none" },
-            "3rd Kit": { body: "#1c2321", sleeves: "#1c2321", trim: "#ffffff", font: "#ffffff", stripes: "none" }
+            "Home Edition": { base: "#c8102e", accent: "#ffffff", second: "#ffd700", font: "#ffd700", pattern: "none" },
+            "Away Edition": { base: "#ffffff", accent: "#00b2a9", second: "#1c2321", font: "#1c2321", pattern: "none" },
+            "Alternative 3rd": { base: "#1c2321", accent: "#ffffff", second: "#c8102e", font: "#ffffff", pattern: "none" }
         },
         "Manchester City": {
-            "Home Kit": { body: "#6cabdd", sleeves: "#6cabdd", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#1c2c5b", sleeves: "#1c2c5b", trim: "#ffeb3b", font: "#ffeb3b", stripes: "block", scolor: "rgba(255,235,59,0.15)" },
-            "3rd Kit": { body: "#333333", sleeves: "#333333", trim: "#6cabdd", font: "#6cabdd", stripes: "none" }
+            "Home Edition": { base: "#6cabdd", accent: "#1c2c5b", second: "#1c2c5b", font: "#1c2c5b", pattern: "none" },
+            "Away Edition": { base: "#1c2c5b", accent: "#ffeb3b", second: "#ffeb3b", font: "#ffeb3b", pattern: "block", scolor: "rgba(255,235,59,0.12)" },
+            "Alternative 3rd": { base: "#333333", accent: "#6cabdd", second: "#6cabdd", font: "#6cabdd", pattern: "none" }
         },
         "Manchester United": {
-            "Home Kit": { body: "#da291c", sleeves: "#da291c", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#22332c", sleeves: "#22332c", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(255,255,255,0.1)" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#da291c", font: "#da291c", stripes: "none" }
+            "Home Edition": { base: "#da291c", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#1e293b", accent: "#ffffff", second: "#da291c", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#ffffff", accent: "#da291c", second: "#1e293b", font: "#da291c", pattern: "none" }
         },
-        "Newcastle United": {
-            "Home Kit": { body: "#111111", sleeves: "#111111", trim: "#ffffff", font: "#da291c", stripes: "block", scolor: "rgba(255,255,255,0.9)" },
-            "Away Kit": { body: "#41b6e6", sleeves: "#41b6e6", trim: "#111111", font: "#111111", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#00483a", font: "#00483a", stripes: "none" }
-        },
-        "Tottenham Hotspur": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#132257", font: "#132257", stripes: "none" },
-            "Away Kit": { body: "#132257", sleeves: "#132257", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#b4cdad", sleeves: "#b4cdad", trim: "#132257", font: "#132257", stripes: "none" }
-        },
-        "West Ham United": {
-            "Home Kit": { body: "#7a263a", sleeves: "#1bb1e7", trim: "#1bb1e7", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#7a263a", font: "#7a263a", stripes: "none" },
-            "3rd Kit": { body: "#1c1c1c", sleeves: "#1c1c1c", trim: "#ffd700", font: "#ffd700", stripes: "none" }
+        "Ipswich Town": {
+            "Home Edition": { base: "#0000ff", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#facc15", accent: "#000000", second: "#000000", font: "#000000", pattern: "none" },
+            "Alternative 3rd": { base: "#ec4899", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" }
         },
         "Aston Villa": {
-            "Home Kit": { body: "#95bfe5", sleeves: "#7a263a", trim: "#7a263a", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#7a263a", font: "#7a263a", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#95bfe5", font: "#95bfe5", stripes: "none" }
-        },
-        "Everton": {
-            "Home Kit": { body: "#004890", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ff7f00", sleeves: "#ff7f00", trim: "#004890", font: "#004890", stripes: "none" },
-            "3rd Kit": { body: "#1c1c1c", sleeves: "#1c1c1c", trim: "#ff7f00", font: "#ff7f00", stripes: "none" }
+            "Home Edition": { base: "#7a263a", accent: "#95bfe5", second: "#95bfe5", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#ffffff", accent: "#7a263a", second: "#7a263a", font: "#7a263a", pattern: "none" },
+            "Alternative 3rd": { base: "#020617", accent: "#95bfe5", second: "#95bfe5", font: "#95bfe5", pattern: "none" }
         },
 
-        /* LaLiga */
+        /* LaLiga 25/26 Profiles */
         "Real Madrid": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#111111", font: "#111111", stripes: "none" },
-            "Away Kit": { body: "#ffb6c1", sleeves: "#ffb6c1", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#1c2430", sleeves: "#1c2430", trim: "#ffd700", font: "#ffd700", stripes: "block", scolor: "rgba(255,215,0,0.1)" }
+            "Home Edition": { base: "#ffffff", accent: "#1e293b", second: "#ffd700", font: "#1e293b", pattern: "none" },
+            "Away Edition": { base: "#ffb6c1", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#0f172a", accent: "#ffd700", second: "#ffd700", font: "#ffd700", pattern: "none" }
         },
         "Barcelona": {
-            "Home Kit": { body: "#004d98", sleeves: "#a50044", trim: "#ffd700", font: "#ffd700", stripes: "block", scolor: "rgba(165,0,68,0.9)" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#004d98", font: "#004d98", stripes: "none" },
-            "3rd Kit": { body: "#aaf0d1", sleeves: "#aaf0d1", trim: "#a50044", font: "#a50044", stripes: "none" }
+            "Home Edition": { base: "#004d98", accent: "#a50044", second: "#ffd700", font: "#ffd700", pattern: "block", scolor: "rgba(165,0,68,0.85)" },
+            "Away Edition": { base: "#000000", accent: "#004d98", second: "#a50044", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#aaf0d1", accent: "#a50044", second: "#004d98", font: "#a50044", pattern: "none" }
         },
         "Atletico Madrid": {
-            "Home Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(255,255,255,0.95)" },
-            "Away Kit": { body: "#112344", sleeves: "#112344", trim: "#cb3524", font: "#cb3524", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#112344", font: "#112344", stripes: "none" }
+            "Home Edition": { base: "#cb3524", accent: "#ffffff", second: "#004d98", font: "#ffffff", pattern: "block", scolor: "rgba(255,255,255,0.9)" },
+            "Away Edition": { base: "#0f172a", accent: "#cb3524", second: "#cb3524", font: "#cb3524", pattern: "none" },
+            "Alternative 3rd": { base: "#ffffff", accent: "#0f172a", second: "#cb3524", font: "#0f172a", pattern: "none" }
         },
         "Girona": {
-            "Home Kit": { body: "#e21c1c", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(255,255,255,0.9)" },
-            "Away Kit": { body: "#002d62", sleeves: "#002d62", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#ffd700", sleeves: "#ffd700", trim: "#e21c1c", font: "#e21c1c", stripes: "none" }
+            "Home Edition": { base: "#e21c1c", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "block", scolor: "rgba(255,255,255,0.85)" },
+            "Away Edition": { base: "#0a192f", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#ffd700", accent: "#e21c1c", second: "#e21c1c", font: "#e21c1c", pattern: "none" }
         },
         "Real Sociedad": {
-            "Home Kit": { body: "#0066b2", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(255,255,255,0.9)" },
-            "Away Kit": { body: "#112344", sleeves: "#112344", trim: "#0066b2", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#112344", font: "#112344", stripes: "none" }
-        },
-        "Sevilla": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cb3524", font: "#cb3524", stripes: "none" },
-            "Away Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#ffd700", font: "#ffd700", stripes: "none" }
-        },
-        "Valencia": {
-            "Home Kit": { body: "#ffffff", sleeves: "#111111", trim: "#111111", font: "#111111", stripes: "none" },
-            "Away Kit": { body: "#ff7f00", sleeves: "#111111", trim: "#111111", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#112344", sleeves: "#112344", trim: "#ff7f00", font: "#ff7f00", stripes: "none" }
-        },
-        "Athletic Bilbao": {
-            "Home Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(255,255,255,0.95)" },
-            "Away Kit": { body: "#87ceeb", sleeves: "#87ceeb", trim: "#cb3524", font: "#111111", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cb3524", font: "#cb3524", stripes: "none" }
+            "Home Edition": { base: "#0066b2", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "block", scolor: "rgba(255,255,255,0.85)" },
+            "Away Edition": { base: "#0f172a", accent: "#0066b2", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#ffffff", accent: "#0f172a", second: "#0066b2", font: "#0f172a", pattern: "none" }
         },
 
-        /* Bundesliga */
+        /* Bundesliga 25/26 Profiles */
         "Bayer Leverkusen": {
-            "Home Kit": { body: "#cc0000", sleeves: "#111111", trim: "#111111", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cc0000", font: "#cc0000", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#cc0000", font: "#cc0000", stripes: "none" }
+            "Home Edition": { base: "#cc0000", accent: "#000000", second: "#000000", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#ffffff", accent: "#cc0000", second: "#cc0000", font: "#cc0000", pattern: "none" },
+            "Alternative 3rd": { base: "#000000", accent: "#cc0000", second: "#cc0000", font: "#cc0000", pattern: "none" }
         },
         "Bayern Munich": {
-            "Home Kit": { body: "#dc052d", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#98fb98", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#dc052d", font: "#dc052d", stripes: "none" }
+            "Home Edition": { base: "#dc052d", accent: "#8b0000", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#000000", accent: "#98fb98", second: "#4a0e4e", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#ffffff", accent: "#dc052d", second: "#dc052d", font: "#dc052d", pattern: "none" }
         },
         "Borussia Dortmund": {
-            "Home Kit": { body: "#fde100", sleeves: "#111111", trim: "#111111", font: "#111111", stripes: "block", scolor: "rgba(17,17,17,0.85)" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#fde100", font: "#fde100", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#fde100", font: "#111111", stripes: "none" }
+            "Home Edition": { base: "#fde100", accent: "#000000", second: "#000000", font: "#000000", pattern: "block", scolor: "rgba(0,0,0,0.85)" },
+            "Away Edition": { base: "#000000", accent: "#fde100", second: "#fde100", font: "#fde100", pattern: "none" },
+            "Alternative 3rd": { base: "#ffffff", accent: "#fde100", second: "#000000", font: "#000000", pattern: "none" }
         },
         "RB Leipzig": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#dd013f", font: "#dd013f", stripes: "none" },
-            "Away Kit": { body: "#0c2340", sleeves: "#0c2340", trim: "#dd013f", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#98fb98", font: "#98fb98", stripes: "none" }
-        },
-        "VfB Stuttgart": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#e32219", font: "#e32219", stripes: "none" },
-            "Away Kit": { body: "#e32219", sleeves: "#e32219", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#e32219", font: "#ffffff", stripes: "none" }
-        },
-        "Eintracht Frankfurt": {
-            "Home Kit": { body: "#111111", sleeves: "#111111", trim: "#e2001a", font: "#ffffff", stripes: "block", scolor: "rgba(226,0,26,0.85)" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#111111", font: "#111111", stripes: "none" },
-            "3rd Kit": { body: "#e2001a", sleeves: "#e2001a", trim: "#ffffff", font: "#ffffff", stripes: "none" }
+            "Home Edition": { base: "#ffffff", accent: "#dd013f", second: "#dd013f", font: "#dd013f", pattern: "none" },
+            "Away Edition": { base: "#0c2340", accent: "#dd013f", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#000000", accent: "#98fb98", second: "#98fb98", font: "#98fb98", pattern: "none" }
         },
 
-        /* Serie A */
+        /* Serie A 25/26 Profiles */
         "Inter Milan": {
-            "Home Kit": { body: "#004d98", sleeves: "#111111", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(17,17,17,0.9)" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#004d98", font: "#111111", stripes: "none" },
-            "3rd Kit": { body: "#ffeb3b", sleeves: "#ffeb3b", trim: "#111111", font: "#111111", stripes: "none" }
+            "Home Edition": { base: "#004d98", accent: "#000000", second: "#ffffff", font: "#ffffff", pattern: "block", scolor: "rgba(0,0,0,0.85)" },
+            "Away Edition": { base: "#ffffff", accent: "#004d98", second: "#000000", font: "#000000", pattern: "none" },
+            "Alternative 3rd": { base: "#facc15", accent: "#000000", second: "#000000", font: "#000000", pattern: "none" }
         },
         "Juventus": {
-            "Home Kit": { body: "#111111", sleeves: "#ffffff", trim: "#ffd700", font: "#ffd700", stripes: "block", scolor: "rgba(255,255,255,0.95)" },
-            "Away Kit": { body: "#ffd700", sleeves: "#ffd700", trim: "#111111", font: "#111111", stripes: "none" },
-            "3rd Kit": { body: "#1c1c1c", sleeves: "#1c1c1c", trim: "#ffffff", font: "#ffffff", stripes: "none" }
+            "Home Edition": { base: "#000000", accent: "#ffffff", second: "#ffd700", font: "#ffd700", pattern: "block", scolor: "rgba(255,255,255,0.9)" },
+            "Away Edition": { base: "#ffd700", accent: "#000000", second: "#000000", font: "#000000", pattern: "none" },
+            "Alternative 3rd": { base: "#1e293b", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" }
         },
         "AC Milan": {
-            "Home Kit": { body: "#cc0000", sleeves: "#111111", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(17,17,17,0.9)" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cc0000", font: "#cc0000", stripes: "none" },
-            "3rd Kit": { body: "#112344", sleeves: "#112344", trim: "#ff7f00", font: "#ff7f00", stripes: "none" }
+            "Home Edition": { base: "#cc0000", accent: "#000000", second: "#ffffff", font: "#ffffff", pattern: "block", scolor: "rgba(0,0,0,0.85)" },
+            "Away Edition": { base: "#ffffff", accent: "#cc0000", second: "#000000", font: "#cc0000", pattern: "none" },
+            "Alternative 3rd": { base: "#0f172a", accent: "#ea580c", second: "#ea580c", font: "#ea580c", pattern: "none" }
         },
         "Napoli": {
-            "Home Kit": { body: "#1bb1e7", sleeves: "#1bb1e7", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#1bb1e7", font: "#1bb1e7", stripes: "none" },
-            "3rd Kit": { body: "#112344", sleeves: "#112344", trim: "#ffd700", font: "#ffd700", stripes: "none" }
-        },
-        "AS Roma": {
-            "Home Kit": { body: "#7e1927", sleeves: "#7e1927", trim: "#f1ad1d", font: "#f1ad1d", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#7e1927", font: "#7e1927", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#7e1927", font: "#f1ad1d", stripes: "none" }
-        },
-        "Lazio": {
-            "Home Kit": { body: "#87ceeb", sleeves: "#ffffff", trim: "#ffffff", font: "#112344", stripes: "none" },
-            "Away Kit": { body: "#112344", sleeves: "#112344", trim: "#87ceeb", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#112344", font: "#112344", stripes: "none" }
-        },
-        "Atalanta": {
-            "Home Kit": { body: "#004d98", sleeves: "#111111", trim: "#ffffff", font: "#ffffff", stripes: "block", scolor: "rgba(17,17,17,0.9)" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#004d98", font: "#004d98", stripes: "none" },
-            "3rd Kit": { body: "#cc0000", sleeves: "#cc0000", trim: "#ffffff", font: "#ffffff", stripes: "none" }
+            "Home Edition": { base: "#1bb1e7", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#ffffff", accent: "#1bb1e7", second: "#1bb1e7", font: "#1bb1e7", pattern: "none" },
+            "Alternative 3rd": { base: "#0f172a", accent: "#ffd700", second: "#ffd700", font: "#ffd700", pattern: "none" }
         },
 
-        /* World Cup Nationals */
+        /* International Matchday 25/26 Profiles */
+        "Kenya (Harambee Stars)": {
+            "Home Edition": { base: "#cc0000", accent: "#ffffff", second: "#000000", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#ffffff", accent: "#cc0000", second: "#000000", font: "#cc0000", pattern: "none" },
+            "Alternative 3rd": { base: "#008751", accent: "#ffffff", second: "#ffffff", font: "#ffffff", pattern: "none" }
+        },
         "Argentina": {
-            "Home Kit": { body: "#75aadb", sleeves: "#ffffff", trim: "#ffd700", font: "#111111", stripes: "block", scolor: "rgba(255,255,255,0.95)" },
-            "Away Kit": { body: "#112344", sleeves: "#112344", trim: "#75aadb", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#75aadb", font: "#75aadb", stripes: "none" }
+            "Home Edition": { base: "#75aadb", accent: "#ffffff", second: "#ffd700", font: "#111111", pattern: "block", scolor: "rgba(255,255,255,0.9)" },
+            "Away Edition": { base: "#0f172a", accent: "#75aadb", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#ffffff", accent: "#75aadb", second: "#75aadb", font: "#75aadb", pattern: "none" }
         },
         "Brazil": {
-            "Home Kit": { body: "#ffdf00", sleeves: "#ffdf00", trim: "#009b3a", font: "#002776", stripes: "none" },
-            "Away Kit": { body: "#002776", sleeves: "#002776", trim: "#ffdf00", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#00483a", sleeves: "#00483a", trim: "#ffdf00", font: "#ffdf00", stripes: "none" }
+            "Home Edition": { base: "#ffdf00", accent: "#ffdf00", second: "#009b3a", font: "#002776", pattern: "none" },
+            "Away Edition": { base: "#002776", accent: "#002776", second: "#ffdf00", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#00483a", accent: "#ffdf00", second: "#ffdf00", font: "#ffdf00", pattern: "none" }
         },
         "France": {
-            "Home Kit": { body: "#051440", sleeves: "#051440", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#051440", font: "#051440", stripes: "none" },
-            "3rd Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#051440", font: "#ffffff", stripes: "none" }
-        },
-        "England": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#051440", font: "#051440", stripes: "none" },
-            "Away Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#051440", sleeves: "#051440", trim: "#ffd700", font: "#ffd700", stripes: "none" }
+            "Home Edition": { base: "#051440", accent: "#051440", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Away Edition": { base: "#ffffff", accent: "#051440", second: "#cb3524", font: "#051440", pattern: "none" },
+            "Alternative 3rd": { base: "#cb3524", accent: "#051440", second: "#ffffff", font: "#ffffff", pattern: "none" }
         },
         "Germany": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#111111", font: "#111111", stripes: "none" },
-            "Away Kit": { body: "#ff69b4", sleeves: "#112344", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#ffd700", font: "#ffffff", stripes: "none" }
-        },
-        "Portugal": {
-            "Home Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#00483a", font: "#ffd700", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cb3524", font: "#cb3524", stripes: "none" },
-            "3rd Kit": { body: "#00483a", sleeves: "#00483a", trim: "#ffd700", font: "#ffffff", stripes: "none" }
-        },
-        "Spain": {
-            "Home Kit": { body: "#cb3524", sleeves: "#cb3524", trim: "#ffd700", font: "#ffd700", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cb3524", font: "#cb3524", stripes: "none" },
-            "3rd Kit": { body: "#112344", sleeves: "#112344", trim: "#ffd700", font: "#ffffff", stripes: "none" }
-        },
-        "Kenya (Harambee Stars)": {
-            "Home Kit": { body: "#cc0000", sleeves: "#cc0000", trim: "#ffffff", font: "#ffffff", stripes: "none" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cc0000", font: "#cc0000", stripes: "none" },
-            "3rd Kit": { body: "#228b22", sleeves: "#228b22", trim: "#ffffff", font: "#ffffff", stripes: "none" }
+            "Home Edition": { base: "#ffffff", accent: "#000000", second: "#000000", font: "#000000", pattern: "none" },
+            "Away Edition": { base: "#ec4899", accent: "#4c1d95", second: "#ffffff", font: "#ffffff", pattern: "none" },
+            "Alternative 3rd": { base: "#000000", accent: "#ffd700", second: "#cb3524", font: "#ffffff", pattern: "none" }
         }
     };
 
-    function switchTrack(track) {
-        document.getElementById('kit-track-input').value = track;
-        document.getElementById('btn-track-plain').classList.toggle('active', track === 'plain');
-        document.getElementById('btn-track-team').classList.toggle('active', track === 'team');
+    function toggleModeChannel(mode) {
+        document.getElementById('route-hidden-bridge').value = mode;
+        document.getElementById('tab-custom').classList.toggle('active', mode === 'custom');
+        document.getElementById('tab-official').classList.toggle('active', mode === 'official');
 
-        if (track === 'plain') {
-            document.getElementById('section-track-plain').style.display = 'block';
-            document.getElementById('section-track-team').style.display = 'none';
-            applyTeamKitColors();
+        if (mode === 'custom') {
+            document.getElementById('wrapper-official-teams').style.opacity = '0.3';
+            document.getElementById('wrapper-official-teams').style.pointerEvents = 'none';
+            mutateVisualTarget("#1e293b", "#ffffff", "#ffffff", "#ffffff", "none", "transparent");
         } else {
-            document.getElementById('section-track-plain').style.display = 'none';
-            document.getElementById('section-track-team').style.display = 'block';
-            updateTeamDropdown();
+            document.getElementById('wrapper-official-teams').style.opacity = '1';
+            document.getElementById('wrapper-official-teams').style.pointerEvents = 'auto';
+            synchronizeSquadDropdown();
         }
     }
 
-    function updateTeamDropdown() {
-        const selectedLeague = document.getElementById('league-select').value;
-        const teamSelect = document.getElementById('team-select');
+    function synchronizeSquadDropdown() {
+        const targetLeague = document.getElementById('ui-league-node').value;
+        const squadSelect = document.getElementById('ui-squad-node');
 
-        teamSelect.innerHTML = "";
-        leagueData[selectedLeague].forEach(team => {
-            let opt = document.createElement('option');
-            opt.value = team;
-            opt.innerText = team;
-            teamSelect.appendChild(opt);
+        squadSelect.innerHTML = "";
+        catalogLeagueRosters[targetLeague].forEach(squad => {
+            let node = document.createElement('option');
+            node.value = squad;
+            node.innerText = squad;
+            squadSelect.appendChild(node);
         });
 
-        applyTeamKitColors();
+        executeKitColorRefresh();
     }
 
-    function applyTeamKitColors() {
-        const track = document.getElementById('kit-track-input').value;
-        
-        if (track === 'plain') {
-            updateVisualEngine("#034694", "#034694", "#ffffff", "#ffffff", "none", "transparent");
-            return;
-        }
+    function executeKitColorRefresh() {
+        const activeRoute = document.getElementById('route-hidden-bridge').value;
+        if (activeRoute === 'custom') return;
 
-        const currentSelectedTeam = document.getElementById('team-select').value;
-        const currentEdition = document.getElementById('kit-edition-select').value;
+        const liveSquad = document.getElementById('ui-squad-node').value;
+        const liveTier = document.getElementById('ui-tier-node').value;
 
-        if (teamKitColors[currentSelectedTeam] && teamKitColors[currentSelectedTeam][currentEdition]) {
-            const cfg = teamKitColors[currentSelectedTeam][currentEdition];
-            updateVisualEngine(cfg.body, cfg.sleeves, cfg.trim, cfg.font, cfg.stripes, cfg.scolor || "transparent");
-        } else {
-            // Safe fallback configuration if matching parameters are not active
-            updateVisualEngine("#252525", "#252525", "#ffffff", "#ffffff", "none", "transparent");
+        if (matrixKitPalette2526[liveSquad] && matrixKitPalette2526[liveSquad][liveTier]) {
+            const data = matrixKitPalette2526[liveSquad][liveTier];
+            mutateVisualTarget(data.base, data.accent, data.second, data.font, data.pattern, data.scolor || "transparent");
         }
     }
 
-    function changeCustomColors(body, sleeves, trim, font, stripes, scolor, element) {
-        document.querySelectorAll('.color-pickers .color-dot').forEach(dot => dot.classList.remove('active'));
-        element.classList.add('active');
-        updateVisualEngine(body, sleeves, trim, font, stripes, scolor);
-    }
-
-    function updateVisualEngine(body, sleeves, trim, font, stripes, scolor) {
-        document.documentElement.style.setProperty('--jersey-body', body);
-        document.documentElement.style.setProperty('--jersey-sleeves', sleeves);
-        document.documentElement.style.setProperty('--jersey-trim', trim);
+    function mutateVisualTarget(base, accent, second, font, pattern, scolor) {
+        document.documentElement.style.setProperty('--jersey-base', base);
+        document.documentElement.style.setProperty('--jersey-accent', accent);
+        document.documentElement.style.setProperty('--jersey-secondary', second);
         document.documentElement.style.setProperty('--jersey-text', font);
-        document.documentElement.style.setProperty('--stripe-display', stripes);
+        document.documentElement.style.setProperty('--stripe-pattern', pattern);
         document.documentElement.style.setProperty('--stripe-color', scolor);
     }
 
-    function updateJerseyName(val) {
-        document.getElementById('preview-name-txt').innerText = val.trim().toUpperCase() || "YOUR NAME";
+    function pushNameToMesh(str) {
+        document.getElementById('jersey-name-mesh').innerText = str.trim().toUpperCase() || "YOUR NAME";
     }
 
-    function updateJerseyNumber(val) {
-        document.getElementById('preview-number-txt').innerText = val || "7";
+    function pushNumberToMesh(str) {
+        document.getElementById('jersey-number-mesh').innerText = str || "7";
     }
 
-    function changeJerseyFont(fontFamilyString) {
-        document.getElementById('preview-name-txt').style.fontFamily = fontFamilyString;
-        document.getElementById('preview-number-txt').style.fontFamily = fontFamilyString;
+    function adjustMeshFontFamily(fontFamilyCssString) {
+        document.getElementById('jersey-name-mesh').style.fontFamily = fontFamilyCssString;
+        document.getElementById('jersey-number-mesh').style.fontFamily = fontFamilyCssString;
     }
 
     window.onload = function() {
-        updateTeamDropdown();
+        synchronizeSquadDropdown();
     };
 
-    // Form submission rendering process
-    document.getElementById('jerseyOrderForm').addEventListener('submit', function(e) {
+    // Client Form Pipeline Capture Execution
+    document.getElementById('productionStreamForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const form = this;
-        const customerPhone = document.getElementById('cust-phone').value;
-        const captureZone = document.getElementById('capture-zone');
-        const mpesaModal = document.getElementById('mpesa-modal');
+        const formPayload = this;
+        const subscriberPhone = document.getElementById('gateway-phone-node').value;
+        const captureCanvasBox = document.getElementById('render-viewport-node');
+        const gatewayModal = document.getElementById('mpesa-gateway');
         
-        document.getElementById('mpesa-phone-display').innerText = customerPhone || "Your Phone";
-        mpesaModal.style.display = 'flex';
+        document.getElementById('target-phone-mask').innerText = subscriberPhone || "Your Phone";
+        gatewayModal.style.display = 'flex';
 
         setTimeout(() => {
-            document.getElementById('mpesa-status-text').innerText = "STK Prompt Sent! Confirm payment on phone...";
-            document.getElementById('mpesa-status-text').style.color = "#ffeb3b";
+            document.getElementById('gateway-status-channel').innerText = "STK Prompt Dispatched! Complete authentication via handset PIN request...";
+            document.getElementById('gateway-status-channel').style.color = "#facc15";
         }, 2000);
 
-        html2canvas(captureZone, { logging: false, backgroundColor: '#161616' }).then(canvas => {
-            canvas.toBlob(function(blob) {
-                const file = new File([blob], "jersey-mockup-render.png", { type: "image/png" });
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
+        html2canvas(captureCanvasBox, { logging: false, backgroundColor: '#0b0d10' }).then(canvas => {
+            canvas.toBlob(function(binaryBlob) {
+                const vectorImageFile = new File([binaryBlob], "production-kit-blueprint.png", { type: "image/png" });
+                const transferContext = new DataTransfer();
+                transferContext.items.add(vectorImageFile);
                 
-                let hiddenFileInput = document.getElementById('logo-upload-hidden');
-                if(!hiddenFileInput) {
-                    hiddenFileInput = document.createElement('input');
-                    hiddenFileInput.type = 'file';
-                    hiddenFileInput.id = 'logo-upload-hidden';
-                    hiddenFileInput.name = 'Structural Render Capture';
-                    hiddenFileInput.style.display = 'none';
-                    form.appendChild(hiddenFileInput);
+                let fileBridgeInput = document.getElementById('hidden-render-attachment');
+                if(!fileBridgeInput) {
+                    fileBridgeInput = document.createElement('input');
+                    fileBridgeInput.type = 'file';
+                    fileBridgeInput.id = 'hidden-render-attachment';
+                    fileBridgeInput.name = 'Production Image Attachment';
+                    fileBridgeInput.style.display = 'none';
+                    formPayload.appendChild(fileBridgeInput);
                 }
-                hiddenFileInput.files = dataTransfer.files;
+                fileBridgeInput.files = transferContext.files;
                 
-                finishOrder();
+                finalizeTransaction();
             }, 'image/png');
         });
 
-        function finishOrder() {
+        function finalizeTransaction() {
             setTimeout(() => {
-                document.getElementById('mpesa-status-text').innerText = "Payment Verified! Sending Layout Profile...";
-                document.getElementById('mpesa-status-text').style.color = "#28a745";
+                document.getElementById('gateway-status-channel').innerText = "M-Pesa Verification Confirmed! Shipping Manifest data...";
+                document.getElementById('gateway-status-channel').style.color = "#4caf50";
                 
                 setTimeout(() => {
-                    mpesaModal.style.display = 'none';
+                    gatewayModal.style.display = 'none';
                     
-                    const formData = new FormData(form);
-                    const submitBtn = form.querySelector('.submit-order-btn');
-                    submitBtn.innerText = "Transmitting Layout Data...";
-                    submitBtn.disabled = true;
+                    const compiledFormData = new FormData(formPayload);
+                    const interfaceBtn = formPayload.querySelector('.action-dispatch-btn');
+                    interfaceBtn.innerText = "Encrypting Data Streams...";
+                    interfaceBtn.disabled = true;
 
-                    fetch(form.action, {
-                        method: form.method,
-                        body: formData,
+                    fetch(formPayload.action, {
+                        method: formPayload.method,
+                        body: compiledFormData,
                         headers: { 'Accept': 'application/json' }
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            form.reset();
-                            switchTrack('team');
-                            document.getElementById('input-back-name').value = "";
-                            updateJerseyName("");
-                            updateJerseyNumber("7");
-                            alert("🎉 Custom Jersey Order Sent Successfully!\n\nYour 2D mockup structural render screenshot and payment details have been logged.");
+                    .then(res => {
+                        if (res.ok) {
+                            formPayload.reset();
+                            toggleModeChannel('official');
+                            document.getElementById('entry-name').value = "";
+                            pushNameToMesh("");
+                            pushNumberToMesh("7");
+                            alert("🎉 Studio Manifest Logged Successfully!\n\nYour production-ready layout render capture and secure mobile payment clearance token have been successfully dispatched.");
                         } else {
-                            alert("Submission processing error. Please try again.");
+                            alert("Transmission endpoint communication error. Please try again.");
                         }
                     })
-                    .catch(error => {
-                        alert("Network connectivity issue. Please check your connection.");
+                    .catch(() => {
+                        alert("Network connection error. Check your uplink configuration.");
                     })
                     .finally(() => {
-                        submitBtn.innerText = "Forward Configured Jersey Order";
-                        submitBtn.disabled = false;
+                        interfaceBtn.innerText = "Compile & Dispatch Order Package";
+                        interfaceBtn.disabled = false;
                     });
                 }, 1500);
             }, 6000); 
