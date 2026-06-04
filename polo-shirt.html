@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Polo Shirts | Bensoft Prints</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --ink: #0d0d0d; --paper: #f5f0e8; --accent: #e8420a; --mid: #5a5248; --light: #ebe5d8; --white: #fdfaf4; --border: rgba(13,13,13,0.12); --green: #28a745; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); padding-bottom: 4rem; }
+        /* Reuse T-shirt CSS for consistency */
+        nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2.5rem; background: var(--ink); border-bottom: 3px solid var(--accent); }
+        .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--paper); text-decoration: none; }
+        .nav-logo span { color: var(--accent); }
+        .back-link { font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; color: var(--light); text-decoration: none; }
+        .page-header { background: var(--ink); color: var(--paper); padding: 3rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; }
+        .page-title span { color: var(--accent); }
+        .order-type-bar { display: flex; background: var(--ink); padding: 0 4rem; }
+        .type-btn { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: rgba(245,240,232,0.4); background: none; border: none; padding: 1rem 1.6rem; cursor: pointer; border-bottom: 3px solid transparent; }
+        .type-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .workspace { display: grid; grid-template-columns: 1fr 1fr; margin: 3rem 4rem; background: var(--white); border: 2px solid var(--ink); }
+        .preview-side { background: var(--light); padding: 2.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 2px solid var(--ink); }
+        .controls-side { padding: 2.5rem; }
+        .tshirt-wrap { position: relative; width: 260px; height: 280px; }
+        .canvas-text-overlay { position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%); font-weight: 700; text-align: center; pointer-events: none; }
+        .control-group { margin-bottom: 1.4rem; }
+        input, select, textarea { width: 100%; padding: 0.65rem; border: 2px solid var(--border); }
+        .submit-btn { width: 100%; background: var(--accent); color: white; padding: 1rem; border: none; cursor: pointer; }
+        #custom-only-fields { display: none; }
+        #mpesa-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; color: white; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo"><span>B</span>ENSOFT</a>
+    <a href="custom-apparel.html" class="back-link">← Back</a>
+</nav>
+
+<div class="page-header">
+    <h1 class="page-title">POLO SHIRT <span>ORDER</span> HUB</h1>
+</div>
+
+<div class="order-type-bar">
+    <button type="button" class="type-btn active" id="btn-plain" onclick="setOrderType('plain')">Plain Polo</button>
+    <button type="button" class="type-btn" id="btn-custom" onclick="setOrderType('custom')">Customised Polo</button>
+</div>
+
+<div id="mpesa-modal">
+    <div style="background:#1a1a1a; padding:2rem; border:2px solid #4ca64c;">
+        <h3>LIPA NA M-PESA</h3>
+        <p>Paying to: Bensoft Prints</p>
+        <p id="mpesa-status">Sending STK Push...</p>
+    </div>
+</div>
+
+<form id="poloOrderForm" action="https://formspree.io/f/xrevgjve" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="Order Type" id="order-type-input" value="Plain Polo">
+    <input type="hidden" name="Facing View" id="facing-view-input" value="Front">
+    <input type="hidden" name="Selected Color" id="color-input-value" value="#ffffff">
+
+    <div class="workspace">
+        <div class="preview-side">
+            <div class="tshirt-wrap" id="canvas-shirt">
+                <svg viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg">
+                    <path id="shirt-fill" d="M80,10 L50,20 L10,60 L40,75 L30,250 L230,250 L220,75 L250,60 L210,20 L180,10 L170,25 L130,25 L120,10 Z" fill="#ffffff" stroke="#cccccc"/>
+                </svg>
+                <div class="canvas-text-overlay" id="front-text-preview"></div>
+                <div class="canvas-text-overlay" id="back-text-preview" style="display:none;"></div>
+            </div>
+            <div id="view-toggle-block" style="display:none; margin-top:1rem;">
+                <button type="button" onclick="setShirtView('Front')">Front</button>
+                <button type="button" onclick="setShirtView('Back')">Back</button>
+            </div>
+        </div>
+
+        <div class="controls-side">
+            <!-- Colors -->
+            <div class="control-group">
+                <label>Colour</label>
+                <div style="display:flex; gap:10px;">
+                    <div style="width:30px; height:30px; background:white; border:1px solid #000; cursor:pointer;" onclick="changeColor('#ffffff', this)"></div>
+                    <div style="width:30px; height:30px; background:black; cursor:pointer;" onclick="changeColor('#000000', this)"></div>
+                </div>
+            </div>
+            
+            <div id="custom-only-fields">
+                <input type="text" name="Front Text" id="front-text-input" placeholder="Front Text" oninput="updateLiveText()">
+                <input type="file" name="Design File" id="logo-upload" style="margin-top:10px;">
+            </div>
+
+            <input type="text" name="Customer Name" placeholder="Full Name" required>
+            <input type="tel" name="Customer Phone" id="cust-phone" placeholder="Phone" required>
+            <button type="submit" class="submit-btn" id="submit-btn">Proceed to Payment</button>
+        </div>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    function setOrderType(type) {
+        document.getElementById('btn-plain').classList.toggle('active', type === 'plain');
+        document.getElementById('btn-custom').classList.toggle('active', type === 'custom');
+        document.getElementById('order-type-input').value = type === 'plain' ? 'Plain Polo' : 'Customised Polo';
+        document.getElementById('custom-only-fields').style.display = type === 'custom' ? 'block' : 'none';
+        document.getElementById('view-toggle-block').style.display = type === 'custom' ? 'block' : 'none';
+    }
+
+    function changeColor(hex, el) {
+        document.getElementById('shirt-fill').setAttribute('fill', hex);
+        document.getElementById('color-input-value').value = hex;
+    }
+
+    function setShirtView(view) {
+        document.getElementById('facing-view-input').value = view;
+        document.getElementById('front-text-preview').style.display = view === 'Front' ? 'block' : 'none';
+        document.getElementById('back-text-preview').style.display = view === 'Back' ? 'block' : 'none';
+    }
+
+    function updateLiveText() {
+        document.getElementById('front-text-preview').innerText = document.getElementById('front-text-input').value;
+    }
+
+    document.getElementById('poloOrderForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = this;
+        document.getElementById('mpesa-modal').style.display = 'flex';
+        
+        const sendForm = () => {
+            fetch(form.action, { method: 'POST', body: new FormData(form) })
+            .then(() => {
+                alert('Order Sent!');
+                window.location.reload();
+            });
+        };
+
+        if (document.getElementById('order-type-input').value.includes('Customised')) {
+            html2canvas(document.getElementById('canvas-shirt')).then(canvas => {
+                canvas.toBlob(blob => {
+                    const file = new File([blob], 'polo.png');
+                    const dt = new DataTransfer(); dt.items.add(file);
+                    document.getElementById('logo-upload').files = dt.files;
+                    sendForm();
+                });
+            });
+        } else {
+            sendForm();
+        }
+    });
+</script>
+</body>
+</html>
