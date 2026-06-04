@@ -371,7 +371,97 @@
         document.getElementById('front-text-preview').innerText = frontVal;
         document.getElementById('back-text-preview').innerText = backVal;
     }
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    // State management variables
+    let currentType = 'plain';
+    let currentView = 'Front';
 
+    function setOrderType(type) {
+        currentType = type;
+        document.getElementById('btn-plain').classList.toggle('active', type === 'plain');
+        document.getElementById('btn-custom').classList.toggle('active', type === 'custom');
+        document.getElementById('order-type-input').value = type === 'plain' ? 'Plain T-Shirt' : 'Customized Designer Shirt';
+
+        const customBlock = document.getElementById('custom-only-fields');
+        const viewToggleBlock = document.getElementById('view-toggle-block');
+        
+        if(type === 'custom') {
+            customBlock.style.display = 'block';
+            viewToggleBlock.style.display = 'flex';
+        } else {
+            customBlock.style.display = 'none';
+            viewToggleBlock.style.display = 'none';
+            setShirtView('Front');
+        }
+    }
+
+    function changeColor(hexColor, element) {
+        document.getElementById('canvas-shirt').style.backgroundColor = hexColor;
+        document.getElementById('color-input-value').value = hexColor;
+        document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('selected'));
+        element.classList.add('selected');
+
+        const frontText = document.getElementById('front-text-preview');
+        const backText = document.getElementById('back-text-preview');
+        if(hexColor === '#000000') {
+            frontText.style.color = '#ffffff';
+            backText.style.color = '#ffffff';
+        } else {
+            frontText.style.color = '#000000';
+            backText.style.color = '#000000';
+        }
+    }
+
+    function setShirtView(view) {
+        currentView = view;
+        document.getElementById('facing-view-input').value = view;
+        document.getElementById('view-front-btn').classList.toggle('active', view === 'Front');
+        document.getElementById('view-back-btn').classList.toggle('active', view === 'Back');
+
+        const frontTxt = document.getElementById('front-text-preview');
+        const backTxt = document.getElementById('back-text-preview');
+
+        if(view === 'Front') {
+            frontTxt.style.display = 'block';
+            backTxt.style.display = 'none';
+        } else {
+            frontTxt.style.display = 'none';
+            backTxt.style.display = 'block';
+        }
+    }
+
+    function updateLiveText() {
+        const frontVal = document.getElementById('front-text-input').value;
+        const backVal = document.getElementById('back-text-input').value;
+        document.getElementById('front-text-preview').innerText = frontVal;
+        document.getElementById('back-text-preview').innerText = backVal;
+    }
+
+    // --- NEW SNAPSHOT GENERATOR CODE ---
+    document.getElementById('tshirtOrderForm').addEventListener('submit', function(e) {
+        // If they chose custom, generate the mockup snapshot file dynamically
+        if (currentType === 'custom') {
+            e.preventDefault(); // Pause form submission for a second to capture image
+            const form = this;
+            const shirtTarget = document.getElementById('canvas-shirt');
+
+            html2canvas(shirtTarget, { logging: false, useCORS: true }).then(canvas => {
+                canvas.toBlob(function(blob) {
+                    // Create a virtual file attachment named "tshirt-design.png"
+                    const file = new File([blob], "tshirt-design.png", { type: "image/png" });
+                    
+                    // Inject it directly into the file upload slot automatically
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    document.getElementById('logo-upload').files = dataTransfer.files;
+
+                    // Resume form submission safely
+                    form.submit();
+                }, 'image/png');
+            });
+        }
+    });
+</script>
 </body>
 </html>
