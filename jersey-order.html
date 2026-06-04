@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bensoft Prints - Football Jersey Customizer</title>
-    <!-- Include html2canvas for mockup generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -86,8 +85,10 @@
             text-transform: uppercase;
             color: #111;
             letter-spacing: 2px;
-            font-family: Arial, sans-serif;
+            /* Default Font Style */
+            font-family: 'Impact', Arial Black, sans-serif; 
             min-height: 35px;
+            transition: font-family 0.2s ease;
         }
 
         .jersey-number-display {
@@ -97,6 +98,7 @@
             color: #111;
             line-height: 1;
             margin-top: 10px;
+            transition: font-family 0.2s ease;
         }
 
         /* Panel Settings Controls Form */
@@ -148,7 +150,6 @@
 </head>
 <body>
 
-<!-- M-Pesa Simulation Modal Pop-up Box -->
 <div id="mpesa-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; font-family: sans-serif;">
     <div style="background: #1e1e1e; color: #fff; width: 320px; border-radius: 12px; padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 2px solid #4ca64c;">
         <div style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
@@ -172,7 +173,6 @@
 </div>
 
 <div class="container">
-    <!-- LEFT PANEL: Dynamic Jersey Canvas Studio -->
     <div class="preview-box">
         <div class="jersey-canvas" id="canvas-jersey">
             <div class="v-neck"></div>
@@ -184,13 +184,11 @@
         <p style="color: var(--text-gray); font-size: 0.85rem; margin-top: 15px; font-style: italic;">Mockup back-print print design perspective.</p>
     </div>
 
-    <!-- RIGHT PANEL: Advanced Catalog Selection Logic Box -->
     <div class="form-box">
         <h2>Match Day Kit Customizer</h2>
         
         <form id="jerseyOrderForm" action="https://formspree.io/f/xvggpzel" method="POST" enctype="multipart/form-data">
             
-            <!-- TRACK SWITCHER: Plain vs Team Replica -->
             <div class="form-group">
                 <label>Select Jersey Track Category</label>
                 <div class="type-toggle">
@@ -202,7 +200,6 @@
                 <input type="hidden" name="Kit Track Category" id="kit-track-input" value="plain">
             </div>
 
-            <!-- TRACK A: PLAIN / CUSTOM COLOR SELECTION PANEL -->
             <div id="section-track-plain" class="conditional-section">
                 <div class="form-group">
                     <label>Choose Jersey Fabric Color Base</label>
@@ -217,7 +214,6 @@
                 </div>
             </div>
 
-            <!-- TRACK B: OFFICIAL LEAGUE/TEAM SELECTION PANEL -->
             <div id="section-track-team" class="conditional-section" style="display: none;">
                 <div class="form-group">
                     <label>Choose Football Tournament / Category League</label>
@@ -232,15 +228,12 @@
                     </select>
                 </div>
 
-                <!-- SUB-MENU 1: DYNAMIC CLUBS BASED ON LEAGUE SELECTION -->
                 <div class="form-group" id="group-team-select" style="display: none;">
                     <label>Select Club/National Team Squad</label>
                     <select id="team-select" name="Selected Team Squad" onchange="applyTeamKitColors()">
-                        <!-- JS injected options will live here dynamically -->
-                    </select>
+                        </select>
                 </div>
 
-                <!-- SUB-MENU 2: JERSEY DESIGN LAYOUT EDITION SELECTOR -->
                 <div class="form-group" id="group-kit-edition" style="display: none;">
                     <label>Select Team Badge Jersey Edition Variant</label>
                     <select id="kit-edition-select" name="Kit Edition Variant" onchange="applyTeamKitColors()">
@@ -251,7 +244,6 @@
                 </div>
             </div>
 
-            <!-- INTERACTIVE PRINTING CUSTOMIZER CONTROLS EDITOR SECTION -->
             <div class="editor-section">
                 <label style="color: #ffeb3b; font-weight: bold; margin-bottom: 10px;">Back-Print Design Configuration</label>
                 
@@ -264,11 +256,21 @@
                     <label>Squad Number Placement (0 - 99)</label>
                     <input type="number" id="input-back-number" name="Custom Print Number" value="7" min="0" max="99" oninput="updateJerseyNumber(this.value)">
                 </div>
+
+                <div class="form-group">
+                    <label>Select Name & Number Font Style</label>
+                    <select id="font-style-select" name="Custom Font Style" onchange="changeJerseyFont(this.value)">
+                        <option value="Impact, Arial Black, sans-serif">Bold Athletic (Impact)</option>
+                        <option value="'Courier New', Courier, monospace">Classic Retro (Courier)</option>
+                        <option value="'Segoe UI', Tahoma, sans-serif">Modern Clean (Segoe UI)</option>
+                        <option value="'Georgia', serif">Vintage Block Lettering (Georgia)</option>
+                        <option value="Trebuchet MS, sans-serif">Dynamic Sports (Trebuchet)</option>
+                    </select>
+                </div>
             </div>
 
             <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
 
-            <!-- CLIENT CONTACT INFRASTRUCTURE -->
             <div class="form-group">
                 <label>Your Full Name</label>
                 <input type="text" name="Client Name" required placeholder="e.g. Mitambo Kelvin">
@@ -290,13 +292,37 @@
 </div>
 
 <script>
-    // Comprehensive Club Databank Matrix Mapping
+    // Expanded Club Databank Matrix Mapping
     const leagueData = {
-        "Premier League": ["Arsenal", "Chelsea", "Manchester United", "Manchester City", "Liverpool"],
-        "LaLiga": ["Real Madrid", "Barcelona", "Atletico Madrid"],
-        "Bundesliga": ["Bayern Munich", "Borussia Dortmund", "Bayer Leverkusen"],
-        "Serie A": ["Juventus", "AC Milan", "Inter Milan", "AS Roma"],
-        "World Cup Kits": ["Argentina", "Brazil", "France", "England", "Kenya (Harambee Stars)"],
+        "Premier League": [
+            "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton", 
+            "Chelsea", "Crystal Palace", "Everton", "Fulham", "Ipswich Town", 
+            "Leicester City", "Liverpool", "Manchester City", "Manchester United", 
+            "Newcastle United", "Nottingham Forest", "Southampton", "Tottenham Hotspur", 
+            "West Ham United", "Wolverhampton Wanderers"
+        ],
+        "LaLiga": [
+            "Athletic Bilbao", "Atletico Madrid", "Barcelona", "Celta Vigo", 
+            "Deportivo Alaves", "Espanyol", "Getafe", "Girona", "Las Palmas", 
+            "Leganes", "Mallorca", "Osasuna", "Rayo Vallecano", "Real Betis", 
+            "Real Madrid", "Real Sociedad", "Sevilla", "Valencia", "Valladolid", "Villarreal"
+        ],
+        "Bundesliga": [
+            "Augsburg", "Bayer Leverkusen", "Bayern Munich", "Bochum", 
+            "Borussia Dortmund", "Borussia Monchengladbach", "Eintracht Frankfurt", 
+            "Freiburg", "Heidenheim", "Hoffenheim", "Holstein Kiel", "Mainz 05", 
+            "RB Leipzig", "St. Pauli", "VfB Stuttgart", "Werder Bremen", "Wolfsburg", "Union Berlin"
+        ],
+        "Serie A": [
+            "Atalanta", "Bologna", "Cagliari", "Como", "Empoli", "Fiorentina", 
+            "Genoa", "Inter Milan", "Juventus", "Lazio", "Lecce", "Monza", 
+            "Napoli", "Parma", "AS Roma", "Torino", "Udinese", "Venezia", "Verona", "AC Milan"
+        ],
+        "World Cup Kits": [
+            "Argentina", "Brazil", "France", "England", "Germany", "Italy", 
+            "Spain", "Portugal", "Netherlands", "Morocco", "Nigeria", "Ghana", 
+            "Cameroon", "Japan", "USA", "Kenya (Harambee Stars)"
+        ],
         "Custom Option": ["Other (Specify details in special comments)"]
     };
 
@@ -305,9 +331,17 @@
         "Arsenal": { "Home Kit": "#ef0107", "Away Kit": "#063672", "3rd Kit": "#e1ffd2" },
         "Chelsea": { "Home Kit": "#034694", "Away Kit": "#ffffff", "3rd Kit": "#000000" },
         "Manchester United": { "Home Kit": "#da291c", "Away Kit": "#1a1a1a", "3rd Kit": "#ffffff" },
+        "Manchester City": { "Home Kit": "#6cabdd", "Away Kit": "#1c2c5b", "3rd Kit": "#333333" },
+        "Liverpool": { "Home Kit": "#c8102e", "Away Kit": "#ffffff", "3rd Kit": "#1c2321" },
         "Real Madrid": { "Home Kit": "#ffffff", "Away Kit": "#ffb6c1", "3rd Kit": "#2c3e50" },
         "Barcelona": { "Home Kit": "#004d98", "Away Kit": "#ffffff", "3rd Kit": "#31b573" },
+        "Bayern Munich": { "Home Kit": "#dc052d", "Away Kit": "#1c2c5b", "3rd Kit": "#ffffff" },
+        "Borussia Dortmund": { "Home Kit": "#fde100", "Away Kit": "#111111", "3rd Kit": "#fde100" },
+        "Juventus": { "Home Kit": "#ffffff", "Away Kit": "#e6f2ff", "3rd Kit": "#111111" },
+        "AC Milan": { "Home Kit": "#e32119", "Away Kit": "#ffffff", "3rd Kit": "#111111" },
+        "Inter Milan": { "Home Kit": "#0053a0", "Away Kit": "#ffffff", "3rd Kit": "#001a33" },
         "Argentina": { "Home Kit": "#75aadb", "Away Kit": "#112244", "3rd Kit": "#ffffff" },
+        "Brazil": { "Home Kit": "#fde100", "Away Kit": "#002776", "3rd Kit": "#ffffff" },
         "Kenya (Harambee Stars)": { "Home Kit": "#cc0000", "Away Kit": "#ffffff", "3rd Kit": "#228b22" }
     };
 
@@ -319,7 +353,6 @@
         if (track === 'plain') {
             document.getElementById('section-track-plain').style.display = 'block';
             document.getElementById('section-track-team').style.display = 'none';
-            // Default canvas back to selected dot color setup
             document.getElementById('canvas-jersey').style.backgroundColor = document.getElementById('plain-color-input').value;
         } else {
             document.getElementById('section-track-plain').style.display = 'none';
@@ -340,10 +373,8 @@
             return;
         }
 
-        // Clean out previous dropdown choices 
         teamSelect.innerHTML = "";
         
-        // Add current catalog squads
         leagueData[selectedLeague].forEach(team => {
             let opt = document.createElement('option');
             opt.value = team;
@@ -363,13 +394,11 @@
         const numTxt = document.getElementById('preview-number-txt');
         const nameTxt = document.getElementById('preview-name-txt');
 
-        // Look up corresponding theme colors based on data grids
         if (teamKitColors[currentSelectedTeam] && teamKitColors[currentSelectedTeam][currentEdition]) {
             const hexColor = teamKitColors[currentSelectedTeam][currentEdition];
             canvas.style.backgroundColor = hexColor;
 
-            // Maintain readability text configurations automatically
-            if (hexColor === '#ffffff' || hexColor === '#e1ffd2') {
+            if (hexColor === '#ffffff' || hexColor === '#e1ffd2' || hexColor === '#fde100' || hexColor === '#e6f2ff') {
                 numTxt.style.color = '#111111';
                 nameTxt.style.color = '#111111';
             } else {
@@ -377,7 +406,7 @@
                 nameTxt.style.color = '#ffffff';
             }
         } else {
-            // Default fallback safe values
+            // Default look if team colors are not explicitly mapped yet
             canvas.style.backgroundColor = "#2a2a2a";
             numTxt.style.color = "#ffffff";
             nameTxt.style.color = "#ffffff";
@@ -410,6 +439,12 @@
         document.getElementById('preview-number-txt').innerText = val || "7";
     }
 
+    // NEW: DYNAMIC FONT SWITCHER LOGIC
+    function changeJerseyFont(fontFamilyString) {
+        document.getElementById('preview-name-txt').style.fontFamily = fontFamilyString;
+        document.getElementById('preview-number-txt').style.fontFamily = fontFamilyString;
+    }
+
     // --- TIMED MPESA PUSH SUBMISSION IMPLEMENTATION ---
     document.getElementById('jerseyOrderForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -427,15 +462,12 @@
             document.getElementById('mpesa-status-text').style.color = "#ffeb3b";
         }, 2000);
 
-        // Capture digital copy of customized jersey setup canvas layout architecture
         html2canvas(jerseyTarget, { logging: false, useCORS: true }).then(canvas => {
             canvas.toBlob(function(blob) {
-                // Background file attachment assembly engine
                 const file = new File([blob], "jersey-custom-print.png", { type: "image/png" });
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 
-                // Programmatically attach generated screenshot file data stream safely
                 let hiddenFileInput = document.getElementById('logo-upload-hidden');
                 if(!hiddenFileInput) {
                     hiddenFileInput = document.createElement('input');
@@ -491,7 +523,7 @@
                     });
 
                 }, 1500);
-            }, 10000); // 10 full seconds of simulation display time
+            }, 10000); // 10 second practice delay countdown timer
         }
     });
 </script>
