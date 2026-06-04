@@ -4,559 +4,538 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Design Your T-Shirt | Bensoft Prints</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ink: #0d0d0d;
+            --paper: #f5f0e8;
+            --accent: #e8420a;
+            --mid: #5a5248;
+            --light: #ebe5d8;
+            --white: #fdfaf4;
+            --border: rgba(13,13,13,0.12);
+            --green: #28a745;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f7fb;
-            color: #333;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            padding-bottom: 4rem;
         }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
+
+        /* ── NAV ── */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2.5rem;
+            background: var(--ink);
+            border-bottom: 3px solid var(--accent);
         }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem; color: var(--paper);
+            letter-spacing: 0.08em; text-decoration: none;
         }
-        .back-btn {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 10px;
+        .nav-logo span { color: var(--accent); }
+        .back-link {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--light);
+            text-decoration: none; transition: color 0.2s;
         }
-        
-        /* Toggle Switch Options */
-        .order-type-selector {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+        .back-link:hover { color: var(--accent); }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            background: var(--ink); color: var(--paper);
+            padding: 3rem 4rem 2.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            position: relative; overflow: hidden;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(232,66,10,0.05) 10px, rgba(232,66,10,0.05) 11px);
+        }
+        .page-header-inner { position: relative; z-index: 1; }
+        .page-eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .page-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--accent); }
+        .page-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1; letter-spacing: 0.02em;
+        }
+        .page-title span { color: var(--accent); }
+        .page-desc {
+            margin-top: 0.6rem; font-size: 0.9rem;
+            color: rgba(245,240,232,0.55); font-weight: 300;
+        }
+
+        /* ── ORDER TYPE SELECTOR ── */
+        .order-type-bar {
+            display: flex; gap: 0;
+            background: var(--ink);
+            padding: 0 4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .type-btn {
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: 2px solid #007bff;
-            background: transparent;
-            color: #007bff;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem; letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(245,240,232,0.4);
+            background: none; border: none;
+            border-bottom: 3px solid transparent;
+            padding: 1rem 1.6rem;
+            cursor: pointer; transition: all 0.2s;
         }
-        .type-btn.active {
-            background: #007bff;
-            color: white;
-        }
+        .type-btn:hover { color: rgba(245,240,232,0.8); }
+        .type-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-        /* Main Workspace Layout */
+        /* ── MAIN WORKSPACE ── */
         .workspace {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin: 3rem 4rem;
+            background: var(--white);
+            border: 2px solid var(--ink);
         }
 
-        /* Left Side: Live Preview Canvas Workspace */
+        /* ── PREVIEW SIDE ── */
         .preview-side {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
+            background: var(--light);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 2.5rem 2rem;
+            border-right: 2px solid var(--ink);
+            min-height: 480px;
             position: relative;
-            min-height: 400px;
         }
-        .tshirt-canvas {
-            width: 320px;
-            height: 350px;
+        .preview-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--mid);
+            margin-bottom: 1.2rem; opacity: 0.7;
+        }
+
+        /* T-shirt SVG canvas */
+        .tshirt-wrap {
             position: relative;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            transition: background-color 0.3s ease;
+            width: 260px; height: 280px;
         }
-        /* Dynamic element containers inside canvas */
-        .canvas-text-front, .canvas-text-back {
+        .tshirt-wrap svg { width: 100%; height: 100%; }
+        .tshirt-color-fill { transition: fill 0.3s ease; }
+
+        .canvas-text-overlay {
             position: absolute;
-            top: 40%;
-            left: 50%;
+            top: 48%; left: 50%;
             transform: translate(-50%, -50%);
-            font-weight: bold;
-            font-size: 1.2rem;
-            text-align: center;
-            word-break: break-word;
-            max-width: 150px;
-            pointer-events: none;
+            font-weight: 700; font-size: 1rem;
+            text-align: center; word-break: break-word;
+            max-width: 100px; pointer-events: none;
+            line-height: 1.3;
+            transition: color 0.3s;
         }
+
         .view-toggle {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
+            margin-top: 1.2rem;
+            display: flex; gap: 0;
         }
         .view-btn {
-            padding: 6px 15px;
-            border: 1px solid #ccc;
-            background: white;
-            border-radius: 4px;
-            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem; letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: transparent; color: var(--mid);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem; cursor: pointer;
+            transition: all 0.2s;
         }
-        .view-btn.active {
-            background: #333;
-            color: white;
-            border-color: #333;
+        .view-btn:first-child { border-right: none; }
+        .view-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+        /* ── CONTROLS SIDE ── */
+        .controls-side {
+            padding: 2.5rem 2rem;
+            display: flex; flex-direction: column;
+            gap: 0;
         }
 
-        /* Right Side: Design Control Panel Forms */
-        .controls-side {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .control-group {
-            margin-bottom: 20px;
-        }
+        .control-group { margin-bottom: 1.4rem; }
         .control-group label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem; letter-spacing: 0.15em;
+            text-transform: uppercase; color: var(--mid);
+            margin-bottom: 0.5rem;
         }
-        .color-picker {
-            display: flex;
-            gap: 10px;
+
+        input[type="text"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            border: 2px solid var(--border);
+            background: var(--paper);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--ink);
+            outline: none;
+            transition: border-color 0.2s;
+            border-radius: 0;
         }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+
+        .color-picker { display: flex; gap: 0.6rem; flex-wrap: wrap; }
         .color-dot {
-            width: 35px;
-            height: 35px;
+            width: 32px; height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid #ddd;
-            transition: transform 0.1s ease;
+            border: 3px solid transparent;
+            transition: transform 0.15s, border-color 0.15s;
+            outline: 2px solid rgba(13,13,13,0.1);
         }
-        .color-dot.selected {
-            transform: scale(1.15);
-            border-color: #333;
-        }
-        
-        input[type="text"], input[type="tel"], select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
+        .color-dot:hover { transform: scale(1.1); }
+        .color-dot.selected { border-color: var(--ink); transform: scale(1.15); }
+
+        #custom-only-fields { display: none; }
+
+        .divider {
+            border: none; border-top: 1px dashed var(--border);
+            margin: 1.5rem 0;
         }
 
-        /* Hidden Custom Fields via JS toggle */
-        #custom-only-fields {
+        .submit-btn {
+            width: 100%;
+            background: var(--accent); color: var(--white);
+            border: none; padding: 1rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem; letter-spacing: 0.12em;
+            text-transform: uppercase; cursor: pointer;
+            transition: background 0.2s; margin-top: 0.5rem;
+        }
+        .submit-btn:hover:not(:disabled) { background: #c73509; }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* ── M-PESA MODAL ── */
+        #mpesa-modal {
             display: none;
+            position: fixed; inset: 0;
+            background: rgba(13,13,13,0.85);
+            z-index: 9999;
+            justify-content: center; align-items: center;
+        }
+        .mpesa-card {
+            background: #1a1a1a; color: #fff;
+            width: 300px; border-radius: 8px;
+            padding: 1.5rem;
+            border: 2px solid #4ca64c;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        .mpesa-header {
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.8rem; margin-bottom: 1rem;
+            font-weight: 700; font-size: 1.1rem;
+            color: #4ca64c; letter-spacing: 0.06em;
+        }
+        .mpesa-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin: 0.4rem 0; }
+        .mpesa-row span:first-child { color: #aaa; }
+        .mpesa-row span:last-child { font-weight: 600; }
+        .mpesa-divider { border: none; border-top: 1px dashed #333; margin: 0.8rem 0; }
+        .mpesa-pin-wrap { text-align: center; margin: 1rem 0; }
+        .mpesa-pin-label { font-size: 0.72rem; color: #aaa; margin-bottom: 0.4rem; }
+        .mpesa-pin-input {
+            width: 120px; text-align: center;
+            background: #2a2a2a; border: 1px solid #444; color: #fff;
+            padding: 0.5rem; font-size: 1.2rem; letter-spacing: 6px;
+            border-radius: 4px; pointer-events: none;
+        }
+        #mpesa-status {
+            text-align: center; font-size: 0.82rem;
+            font-weight: 700; color: #4ca64c;
+            margin-top: 0.8rem; min-height: 1.2rem;
         }
 
-        /* Checkout Contact Info Section */
-        .checkout-section {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 2px dashed #eee;
-        }
-        .submit-order-btn {
-            width: 100%;
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.2s ease;
-        }
-        .submit-order-btn:hover {
-            background: #218838;
+        /* ── RESPONSIVE ── */
+        @media (max-width: 800px) {
+            .workspace { grid-template-columns: 1fr; margin: 2rem 1.5rem; }
+            .preview-side { border-right: none; border-bottom: 2px solid var(--ink); }
+            .page-header { padding: 2rem 1.5rem 1.5rem; }
+            .order-type-bar { padding: 0 1.5rem; }
+            nav { padding: 1rem 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- M-Pesa Simulation Modal Pop-up -->
-<div id="mpesa-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; font-family: sans-serif;">
-    <div style="background: #1e1e1e; color: #fff; width: 320px; border-radius: 12px; padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 2px solid #4ca64c;">
-        <!-- Safaricom Sim Toolkit Header Style -->
-        <div style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
-            <span style="color: #4ca64c; font-weight: bold; font-size: 1.2rem;">LIPA NA M-PESA</span>
-        </div>
-        
-        <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
-            <p style="margin: 5px 0;"><strong>Pay Bill / Till:</strong> Bensoft Prints</p>
-            <p style="margin: 5px 0;"><strong>Amount:</strong> KSh 400.00</p>
-            <p style="margin: 5px 0;"><strong>Account:</strong> <span id="mpesa-phone-display">07XXXXXXXX</span></p>
-            <hr style="border: 0; border-top: 1px dashed #444; margin: 15px 0;">
-            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.85rem;">[STK PUSH SIMULATION ACTIVE]</p>
-        </div>
 
-        <!-- Fake PIN input simulation box -->
-        <div style="margin-bottom: 25px;">
-            <label style="display: block; font-size: 0.8rem; color: #aaa; margin-bottom: 5px; text-align: center;">Enter 4-Digit M-Pesa PIN:</label>
-            <input type="password" maxlength="4" placeholder="••••" disabled style="width: 100px; display: block; margin: 0 auto; text-align: center; background: #333; border: 1px solid #555; color: #fff; padding: 8px; border-radius: 4px; font-size: 1.2rem; letter-spacing: 5px;">
-        </div>
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="nav-logo"><span>B</span>ENSOFT</a>
+    <a href="services.html" class="back-link">← Back to Services</a>
+</nav>
 
-        <!-- Processing animation text -->
-        <div style="text-align: center; color: #4ca64c; font-weight: bold; font-size: 0.9rem;" id="mpesa-status-text">
-            Sending STK Push Prompt...
-        </div>
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="page-header-inner">
+        <div class="page-eyebrow">Custom Apparel</div>
+        <h1 class="page-title">T-SHIRT <span>ORDER</span> HUB</h1>
+        <p class="page-desc">Choose a plain garment or use our live designer to customise your print.</p>
     </div>
 </div>
 
-<div class="container">
-    <header>
-        <a href="custom-apparel.html" class="back-btn">&larr; Back to Apparel Options</a>
-        <h1>T-Shirt Customization Hub</h1>
-        <p>Choose a simple plain garment variant or use our live studio editor to map your brand graphics.</p>
-    </header>
-
-    <!-- Step 1: Choose Plain vs Custom -->
-    <div class="order-type-selector">
-        <button type="button" class="type-btn active" id="btn-plain" onclick="setOrderType('plain')">Plain T-Shirt</button>
-        <button type="button" class="type-btn" id="btn-custom" onclick="setOrderType('custom')">Customized Designer Shirt</button>
-    </div>
-
-    <!-- Main Dynamic Ordering Form -->
-    <!-- REPLACE action URL with your Formspree/EmailJS endpoint later to receive it directly at Kimmitambo17@gmail.com -->
-    <form id="tshirtOrderForm" action="https://formspree.io/f/xrevgjve" method="POST" enctype="multipart/form-data">
-        
-        <!-- Hidden input to tell you what option they picked in the email -->
-        <input type="hidden" name="Order Type" id="order-type-input" value="Plain T-Shirt">
-        <input type="hidden" name="Design View Facing" id="facing-view-input" value="Front">
-
-        <div class="workspace">
-            
-            <!-- LEFT WORKSPACE: Preview Screen -->
-            <div class="preview-side">
-                <!-- Using a standard pure CSS geometric representation/placeholder placeholder for the shirt background -->
-                <div class="tshirt-canvas" id="canvas-shirt" style="background-color: #ffffff; border: 1px dashed #bbb; border-radius: 8px;">
-                    <!-- Front Text overlay view container -->
-                    <div class="canvas-text-front" id="front-text-preview"></div>
-                    <!-- Back Text overlay view container (hidden initially) -->
-                    <div class="canvas-text-back" id="back-text-preview" style="display: none;"></div>
-                </div>
-                
-                <div class="view-toggle" id="view-toggle-block" style="display: none;">
-                    <button type="button" class="view-btn active" id="view-front-btn" onclick="setShirtView('Front')">Front View</button>
-                    <button type="button" class="view-btn" id="view-back-btn" onclick="setShirtView('Back')">Back View</button>
-                </div>
-            </div>
-
-            <!-- RIGHT WORKSPACE: Input Fields configuration -->
-            <div class="controls-side">
-                <div>
-                    <!-- Universal Option: Color Picker -->
-                    <div class="control-group">
-                        <label>Select Base T-Shirt Color:</label>
-                        <div class="color-picker">
-                            <div class="color-dot selected" style="background: #ffffff;" onclick="changeColor('#ffffff', this)"></div>
-                            <div class="color-dot" style="background: #000000;" onclick="changeColor('#000000', this)"></div>
-                            <div class="color-dot" style="background: #ff0000;" onclick="changeColor('#ff0000', this)"></div>
-                            <div class="color-dot" style="background: #0000ff;" onclick="changeColor('#0000ff', this)"></div>
-                            <div class="color-dot" style="background: #ffeb3b;" onclick="changeColor('#ffeb3b', this)"></div>
-                        </div>
-                        <input type="hidden" name="Selected Color" id="color-input-value" value="#ffffff">
-                    </div>
-
-                    <div class="control-group">
-                        <label for="shirt-size">Select Size:</label>
-                        <select name="Size" id="shirt-size" required>
-                            <option value="S">Small (S)</option>
-                            <option value="M" selected>Medium (M)</option>
-                            <option value="L">Large (L)</option>
-                            <option value="XL">Extra Large (XL)</option>
-                        </select>
-                    </div>
-
-                    <!-- CUSTOM TYPE ONLY FIELDS (Revealed dynamically via JavaScript) -->
-                    <div id="custom-only-fields">
-                        <div class="control-group">
-                            <label for="front-text-input">Text on Front Side:</label>
-                            <input type="text" name="Front Text Content" id="front-text-input" placeholder="Type letters for front..." oninput="updateLiveText()">
-                        </div>
-
-                        <div class="control-group">
-                            <label for="back-text-input">Text on Back Side:</label>
-                            <input type="text" name="Back Text Content" id="back-text-input" placeholder="Type letters for back..." oninput="updateLiveText()">
-                        </div>
-
-                        <div class="control-group">
-                            <label for="logo-upload">Upload Graphic/Image Reference:</label>
-                            <input type="file" name="Attached Design Image" id="logo-upload" accept="image/*">
-                            <small style="color:#777; display:block; margin-top:4px;">Upload your company logo or graphics reference artwork.</small>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="order-notes">Additional Ordering Preferences/Quantity:</label>
-                        <textarea name="Special Instructions" id="order-notes" rows="3" placeholder="Specify total quantities, printing method preferences, or placement specifics..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Step 3: Contact Details Submission Frame -->
-                <div class="checkout-section">
-                    <div class="control-group">
-                        <label for="cust-name">Your Full Name *</label>
-                        <input type="text" name="Customer Name" id="cust-name" required placeholder="Enter your name">
-                    </div>
-                    <div class="control-group">
-                        <label for="cust-phone">Mobile Phone Number *</label>
-                        <input type="tel" name="Customer Phone" id="cust-phone" required placeholder="e.g. 0712345678">
-                    </div>
-
-                    <button type="submit" class="submit-order-btn">Forward Order to Bensoft Prints</button>
-                </div>
-
-            </div>
-        </div>
-    </form>
+<!-- ORDER TYPE TABS -->
+<div class="order-type-bar">
+    <button type="button" class="type-btn active" id="btn-plain" onclick="setOrderType('plain')">Plain T-Shirt</button>
+    <button type="button" class="type-btn" id="btn-custom" onclick="setOrderType('custom')">Customised Designer Shirt</button>
 </div>
 
-<script>
-    // State management variables
-    let currentType = 'plain';
-    let currentView = 'Front';
+<!-- M-PESA MODAL -->
+<div id="mpesa-modal" style="display:none; position:fixed; inset:0; background:rgba(13,13,13,0.85); z-index:9999; justify-content:center; align-items:center;">
+    <div class="mpesa-card">
+        <div class="mpesa-header">LIPA NA M-PESA</div>
+        <div class="mpesa-row"><span>Pay To:</span><span>Bensoft Prints</span></div>
+        <div class="mpesa-row"><span>Amount:</span><span>KSh 400.00</span></div>
+        <div class="mpesa-row"><span>Account:</span><span id="mpesa-phone-display">07XXXXXXXX</span></div>
+        <hr class="mpesa-divider">
+        <div class="mpesa-pin-wrap">
+            <div class="mpesa-pin-label">Enter M-Pesa PIN:</div>
+            <input class="mpesa-pin-input" type="password" maxlength="4" placeholder="••••" disabled>
+        </div>
+        <div id="mpesa-status">Sending STK Push Prompt...</div>
+    </div>
+</div>
 
-    function setOrderType(type) {
-        currentType = type;
-        
-        // Update selection UI buttons
-        document.getElementById('btn-plain').classList.toggle('active', type === 'plain');
-        document.getElementById('btn-custom').classList.toggle('active', type === 'custom');
-        
-        // Update hidden field value for email data clarity
-        document.getElementById('order-type-input').value = type === 'plain' ? 'Plain T-Shirt' : 'Customized Designer Shirt';
+<!-- MAIN FORM -->
+<form id="tshirtOrderForm" action="https://formspree.io/f/xrevgjve" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="Order Type" id="order-type-input" value="Plain T-Shirt">
+    <input type="hidden" name="Design View" id="facing-view-input" value="Front">
+    <input type="hidden" name="Selected Color" id="color-input-value" value="#ffffff">
 
-        // Toggle custom feature modules control blocks
-        const customBlock = document.getElementById('custom-only-fields');
-        const viewToggleBlock = document.getElementById('view-toggle-block');
-        
-        if(type === 'custom') {
-            customBlock.style.display = 'block';
-            viewToggleBlock.style.display = 'flex';
-        } else {
-            customBlock.style.display = 'none';
-            viewToggleBlock.style.display = 'none';
-            // Reset to front view defaults on plain mode
-            setShirtView('Front');
-        }
-    }
+    <div class="workspace">
 
-    function changeColor(hexColor, element) {
-        // Set preview box background tone
-        document.getElementById('canvas-shirt').style.backgroundColor = hexColor;
-        document.getElementById('color-input-value').value = hexColor;
+        <!-- LEFT: PREVIEW -->
+        <div class="preview-side">
+            <div class="preview-label">Live Preview</div>
+            <div class="tshirt-wrap" id="canvas-shirt">
+                <!-- T-shirt SVG shape -->
+                <svg viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg">
+                    <path class="tshirt-color-fill" id="shirt-fill"
+                        d="M80,10 L50,20 L10,60 L40,75 L30,250 L230,250 L220,75 L250,60 L210,20 L180,10
+                           C175,30 155,45 130,45 C105,45 85,30 80,10 Z"
+                        fill="#ffffff" stroke="#cccccc" stroke-width="1.5"/>
+                </svg>
+                <div class="canvas-text-overlay" id="front-text-preview"></div>
+                <div class="canvas-text-overlay" id="back-text-preview" style="display:none;"></div>
+            </div>
+            <div class="view-toggle" id="view-toggle-block" style="display:none;">
+                <button type="button" class="view-btn active" id="view-front-btn" onclick="setShirtView('Front')">Front</button>
+                <button type="button" class="view-btn" id="view-back-btn" onclick="setShirtView('Back')">Back</button>
+            </div>
+        </div>
 
-        // Toggle border selections
-        document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('selected'));
-        element.classList.add('selected');
+        <!-- RIGHT: CONTROLS -->
+        <div class="controls-side">
 
-        // Text readability adjustment contrast check
-        const frontText = document.getElementById('front-text-preview');
-        const backText = document.getElementById('back-text-preview');
-        if(hexColor === '#000000') {
-            frontText.style.color = '#ffffff';
-            backText.style.color = '#ffffff';
-        } else {
-            frontText.style.color = '#000000';
-            backText.style.color = '#000000';
-        }
-    }
+            <!-- COLOR PICKER -->
+            <div class="control-group">
+                <label>T-Shirt Colour</label>
+                <div class="color-picker">
+                    <div class="color-dot selected" style="background:#ffffff;" data-color="#ffffff" onclick="changeColor('#ffffff',this)"></div>
+                    <div class="color-dot" style="background:#000000;" data-color="#000000" onclick="changeColor('#000000',this)"></div>
+                    <div class="color-dot" style="background:#e8420a;" data-color="#e8420a" onclick="changeColor('#e8420a',this)"></div>
+                    <div class="color-dot" style="background:#1a56db;" data-color="#1a56db" onclick="changeColor('#1a56db',this)"></div>
+                    <div class="color-dot" style="background:#ffeb3b;" data-color="#ffeb3b" onclick="changeColor('#ffeb3b',this)"></div>
+                    <div class="color-dot" style="background:#2e7d32;" data-color="#2e7d32" onclick="changeColor('#2e7d32',this)"></div>
+                    <div class="color-dot" style="background:#7b1fa2;" data-color="#7b1fa2" onclick="changeColor('#7b1fa2',this)"></div>
+                    <div class="color-dot" style="background:#795548;" data-color="#795548" onclick="changeColor('#795548',this)"></div>
+                </div>
+            </div>
 
-    function setShirtView(view) {
-        currentView = view;
-        document.getElementById('facing-view-input').value = view;
-        
-        document.getElementById('view-front-btn').classList.toggle('active', view === 'Front');
-        document.getElementById('view-back-btn').classList.toggle('active', view === 'Back');
+            <!-- SIZE -->
+            <div class="control-group">
+                <label for="shirt-size">Size</label>
+                <select name="Size" id="shirt-size" required>
+                    <option value="S">Small (S)</option>
+                    <option value="M" selected>Medium (M)</option>
+                    <option value="L">Large (L)</option>
+                    <option value="XL">Extra Large (XL)</option>
+                    <option value="XXL">Double XL (XXL)</option>
+                </select>
+            </div>
 
-        const frontTxt = document.getElementById('front-text-preview');
-        const backTxt = document.getElementById('back-text-preview');
+            <!-- CUSTOM-ONLY FIELDS -->
+            <div id="custom-only-fields">
+                <div class="control-group">
+                    <label for="front-text-input">Text on Front</label>
+                    <input type="text" name="Front Text" id="front-text-input" placeholder="e.g. Bensoft Prints" oninput="updateLiveText()">
+                </div>
+                <div class="control-group">
+                    <label for="back-text-input">Text on Back</label>
+                    <input type="text" name="Back Text" id="back-text-input" placeholder="e.g. Kianyaga, Kenya" oninput="updateLiveText()">
+                </div>
+                <div class="control-group">
+                    <label for="logo-upload">Upload Logo / Artwork</label>
+                    <input type="file" name="Design File" id="logo-upload" accept="image/*">
+                    <small style="color:var(--mid); font-size:0.75rem; margin-top:4px; display:block;">Upload your logo or design reference image.</small>
+                </div>
+            </div>
 
-        if(view === 'Front') {
-            frontTxt.style.display = 'block';
-            backTxt.style.display = 'none';
-        } else {
-            frontTxt.style.display = 'none';
-            backTxt.style.display = 'block';
-        }
-    }
+            <!-- NOTES -->
+            <div class="control-group">
+                <label for="order-notes">Quantity & Special Instructions</label>
+                <textarea name="Instructions" id="order-notes" rows="3" placeholder="e.g. 20 pieces, print on chest only..."></textarea>
+            </div>
 
-    function updateLiveText() {
-        const frontVal = document.getElementById('front-text-input').value;
-        const backVal = document.getElementById('back-text-input').value;
+            <hr class="divider">
 
-        document.getElementById('front-text-preview').innerText = frontVal;
-        document.getElementById('back-text-preview').innerText = backVal;
-    }
+            <!-- CONTACT -->
+            <div class="control-group">
+                <label for="cust-name">Full Name *</label>
+                <input type="text" name="Customer Name" id="cust-name" required placeholder="Your full name">
+            </div>
+            <div class="control-group">
+                <label for="cust-phone">Phone Number *</label>
+                <input type="tel" name="Customer Phone" id="cust-phone" required placeholder="e.g. 0712345678">
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+                Forward Order to Bensoft →
+            </button>
+
+        </div>
+    </div>
+</form>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-    // State management variables
     let currentType = 'plain';
-    let currentView = 'Front';
+    let currentView  = 'Front';
 
+    // ── ORDER TYPE ──
     function setOrderType(type) {
         currentType = type;
         document.getElementById('btn-plain').classList.toggle('active', type === 'plain');
         document.getElementById('btn-custom').classList.toggle('active', type === 'custom');
-        document.getElementById('order-type-input').value = type === 'plain' ? 'Plain T-Shirt' : 'Customized Designer Shirt';
-
-        const customBlock = document.getElementById('custom-only-fields');
-        const viewToggleBlock = document.getElementById('view-toggle-block');
-        
-        if(type === 'custom') {
-            customBlock.style.display = 'block';
-            viewToggleBlock.style.display = 'flex';
-        } else {
-            customBlock.style.display = 'none';
-            viewToggleBlock.style.display = 'none';
-            setShirtView('Front');
-        }
+        document.getElementById('order-type-input').value = type === 'plain' ? 'Plain T-Shirt' : 'Customised Designer Shirt';
+        document.getElementById('custom-only-fields').style.display = type === 'custom' ? 'block' : 'none';
+        document.getElementById('view-toggle-block').style.display  = type === 'custom' ? 'flex'  : 'none';
+        if (type === 'plain') setShirtView('Front');
     }
 
-    function changeColor(hexColor, element) {
-        document.getElementById('canvas-shirt').style.backgroundColor = hexColor;
-        document.getElementById('color-input-value').value = hexColor;
-        document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('selected'));
-        element.classList.add('selected');
-
-        const frontText = document.getElementById('front-text-preview');
-        const backText = document.getElementById('back-text-preview');
-        if(hexColor === '#000000') {
-            frontText.style.color = '#ffffff';
-            backText.style.color = '#ffffff';
-        } else {
-            frontText.style.color = '#000000';
-            backText.style.color = '#000000';
-        }
+    // ── COLOUR ──
+    function changeColor(hex, el) {
+        document.getElementById('shirt-fill').setAttribute('fill', hex);
+        document.getElementById('color-input-value').value = hex;
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+        el.classList.add('selected');
+        // Flip text colour for dark shirts
+        const dark = ['#000000','#1a56db','#2e7d32','#7b1fa2','#795548','#e8420a'];
+        const textColor = dark.includes(hex) ? '#ffffff' : '#000000';
+        document.getElementById('front-text-preview').style.color = textColor;
+        document.getElementById('back-text-preview').style.color  = textColor;
     }
 
+    // ── FRONT / BACK VIEW ──
     function setShirtView(view) {
         currentView = view;
         document.getElementById('facing-view-input').value = view;
         document.getElementById('view-front-btn').classList.toggle('active', view === 'Front');
-        document.getElementById('view-back-btn').classList.toggle('active', view === 'Back');
-
-        const frontTxt = document.getElementById('front-text-preview');
-        const backTxt = document.getElementById('back-text-preview');
-
-        if(view === 'Front') {
-            frontTxt.style.display = 'block';
-            backTxt.style.display = 'none';
-        } else {
-            frontTxt.style.display = 'none';
-            backTxt.style.display = 'block';
-        }
+        document.getElementById('view-back-btn').classList.toggle('active',  view === 'Back');
+        document.getElementById('front-text-preview').style.display = view === 'Front' ? 'block' : 'none';
+        document.getElementById('back-text-preview').style.display  = view === 'Back'  ? 'block' : 'none';
     }
 
+    // ── LIVE TEXT ──
     function updateLiveText() {
-        const frontVal = document.getElementById('front-text-input').value;
-        const backVal = document.getElementById('back-text-input').value;
-        document.getElementById('front-text-preview').innerText = frontVal;
-        document.getElementById('back-text-preview').innerText = backVal;
+        document.getElementById('front-text-preview').innerText = document.getElementById('front-text-input').value;
+        document.getElementById('back-text-preview').innerText  = document.getElementById('back-text-input').value;
     }
 
-    // --- NEW SNAPSHOT GENERATOR CODE ---
-    // --- FINAL SUBMISSION FLOW WITH MPESA SIMULATION & AJAX SUCCESS ---
+    // ── FORM SUBMIT ──
     document.getElementById('tshirtOrderForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Stop the form from performing a hard page reload
-        
+        e.preventDefault();
         const form = this;
-        const customerPhone = document.getElementById('cust-phone').value;
-        const shirtTarget = document.getElementById('canvas-shirt');
+        const submitBtn = document.getElementById('submit-btn');
         const mpesaModal = document.getElementById('mpesa-modal');
-        
-        // 1. Show customer's mobile number inside our mock M-Pesa screen
-        document.getElementById('mpesa-phone-display').innerText = customerPhone || "Customer Device";
-        
-        // 2. Open the M-Pesa overlay window
+
+        // Show M-Pesa modal
+        document.getElementById('mpesa-phone-display').innerText = document.getElementById('cust-phone').value || '07XXXXXXXX';
         mpesaModal.style.display = 'flex';
+        document.getElementById('mpesa-status').innerText = 'Sending STK Push Prompt...';
+        document.getElementById('mpesa-status').style.color = '#4ca64c';
 
-        // 3. Step 1 of Simulation: Update processing status texts
-        setTimeout(() => {
-            document.getElementById('mpesa-status-text').innerText = "STK Prompt Displayed on Phone! Processing payment...";
-            document.getElementById('mpesa-status-text').style.color = "#ffeb3b";
-        }, 1500);
+        submitBtn.innerText  = 'Processing...';
+        submitBtn.disabled   = true;
 
-        // 4. Run html2canvas layout screenshot generator in the background
-        if (currentType === 'custom') {
-            html2canvas(shirtTarget, { logging: false, useCORS: true }).then(canvas => {
-                canvas.toBlob(function(blob) {
-                    const file = new File([blob], "tshirt-design.png", { type: "image/png" });
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    document.getElementById('logo-upload').files = dataTransfer.files;
-                    
-                    finishSimulationAndSend();
-                }, 'image/png');
-            });
-        } else {
-            finishSimulationAndSend();
-        }
+        // Optional: capture canvas screenshot for custom orders
+        const sendForm = () => {
+            const formData = new FormData(form);
 
-        function finishSimulationAndSend() {
-            function finishSubmission() {
+            // Update status after 1.5s
             setTimeout(() => {
-                document.getElementById('mpesa-status-text').innerText = "Payment Verified! Forwarding Order...";
-                document.getElementById('mpesa-status-text').style.color = "#28a745";
-                
+                document.getElementById('mpesa-status').innerText = 'STK Prompt sent! Awaiting payment...';
+                document.getElementById('mpesa-status').style.color = '#ffeb3b';
+            }, 1500);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(res => {
                 setTimeout(() => {
-                    mpesaModal.style.display = 'none'; // Hide overlay window safely
-                    form.submit(); // Fire form off to Formspree
-                }, 1000);
-            }, 10000); // <--- CHANGE THIS NUMBER RIGHT HERE!
-        }
-                    
-                    // --- NEW: AJAX FORMSPREE SUBMISSION BACKGROUND ENGINE ---
-                    const formData = new FormData(form);
-                    
-                    // Change status text on the main order button so they know it's processing
-                    const submitBtn = form.querySelector('.submit-order-btn');
-                    const originalBtnText = submitBtn.innerText;
-                    submitBtn.innerText = "Processing Order Setup...";
-                    submitBtn.disabled = true;
+                    mpesaModal.style.display = 'none';
+                    if (res.ok) {
+                        document.getElementById('mpesa-status').innerText = 'Payment Verified! Order Sent ✓';
+                        form.reset();
+                        setOrderType('plain');
+                        // Reset shirt colour to white
+                        document.getElementById('shirt-fill').setAttribute('fill', '#ffffff');
+                        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+                        document.querySelector('.color-dot[data-color="#ffffff"]').classList.add('selected');
+                        alert('🎉 Order received!\n\nThank you for choosing Bensoft Prints. We will contact you shortly to confirm your order.');
+                    } else {
+                        alert('Something went wrong submitting your order. Please try again or call us directly.');
+                    }
+                }, 3500);
+            })
+            .catch(() => {
+                mpesaModal.style.display = 'none';
+                alert('Network error. Please check your connection and try again, or call us on +254 717 620054.');
+            })
+            .finally(() => {
+                submitBtn.innerText = 'Forward Order to Bensoft →';
+                submitBtn.disabled  = false;
+            });
+        };
 
-                    fetch(form.action, {
-                        method: form.method,
-                        body: formData,
-                        headers: { 'Accept': 'application/json' }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Clear form fields
-                            form.reset();
-                            setOrderType('plain'); // Reset view to default
-                            
-                            // Show custom beautiful success notification alert
-                            alert("🎉 Order Successful!\n\nThank you for choosing Bensoft Prints. We have received your design requirements and payment details. Our team will contact you shortly!");
-                        } else {
-                            alert("Oops! There was a problem submitting your order. Please try again.");
-                        }
-                    })
-                    .catch(error => {
-                        alert("Oops! Network connection issue. Please try again.");
-                    })
-                    .finally(() => {
-                        // Re-enable and restore button states safely
-                        submitBtn.innerText = originalBtnText;
-                        submitBtn.disabled = false;
-                    });
-
-                }, 1000);
-            }, 3500);
+        if (currentType === 'custom' && typeof html2canvas !== 'undefined') {
+            html2canvas(document.getElementById('canvas-shirt'), { logging: false, useCORS: true })
+                .then(canvas => {
+                    canvas.toBlob(blob => {
+                        const file = new File([blob], 'tshirt-preview.png', { type: 'image/png' });
+                        const dt   = new DataTransfer();
+                        dt.items.add(file);
+                        document.getElementById('logo-upload').files = dt.files;
+                        sendForm();
+                    }, 'image/png');
+                })
+                .catch(() => sendForm());
+        } else {
+            sendForm();
         }
     });
 </script>
 </body>
 </html>
-
