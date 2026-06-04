@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Your T-Shirt | Bensoft Prints</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fb;
+            color: #333;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        /* Toggle Switch Options */
+        .order-type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .type-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid #007bff;
+            background: transparent;
+            color: #007bff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .type-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        /* Main Workspace Layout */
+        .workspace {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Left Side: Live Preview Canvas Workspace */
+        .preview-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            min-height: 400px;
+        }
+        .tshirt-canvas {
+            width: 320px;
+            height: 350px;
+            position: relative;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: background-color 0.3s ease;
+        }
+        /* Dynamic element containers inside canvas */
+        .canvas-text-front, .canvas-text-back {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+            word-break: break-word;
+            max-width: 150px;
+            pointer-events: none;
+        }
+        .view-toggle {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .view-btn {
+            padding: 6px 15px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .view-btn.active {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        /* Right Side: Design Control Panel Forms */
+        .controls-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .color-picker {
+            display: flex;
+            gap: 10px;
+        }
+        .color-dot {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: transform 0.1s ease;
+        }
+        .color-dot.selected {
+            transform: scale(1.15);
+            border-color: #333;
+        }
+        
+        input[type="text"], input[type="tel"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        /* Hidden Custom Fields via JS toggle */
+        #custom-only-fields {
+            display: none;
+        }
+
+        /* Checkout Contact Info Section */
+        .checkout-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #eee;
+        }
+        .submit-order-btn {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s ease;
+        }
+        .submit-order-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="custom-apparel.html" class="back-btn">&larr; Back to Apparel Options</a>
+        <h1>T-Shirt Customization Hub</h1>
+        <p>Choose a simple plain garment variant or use our live studio editor to map your brand graphics.</p>
+    </header>
+
+    <!-- Step 1: Choose Plain vs Custom -->
+    <div class="order-type-selector">
+        <button type="button" class="type-btn active" id="btn-plain" onclick="setOrderType('plain')">Plain T-Shirt</button>
+        <button type="button" class="type-btn" id="btn-custom" onclick="setOrderType('custom')">Customized Designer Shirt</button>
+    </div>
+
+    <!-- Main Dynamic Ordering Form -->
+    <!-- REPLACE action URL with your Formspree/EmailJS endpoint later to receive it directly at Kimmitambo17@gmail.com -->
+    <form id="tshirtOrderForm" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" enctype="multipart/form-data">
+        
+        <!-- Hidden input to tell you what option they picked in the email -->
+        <input type="hidden" name="Order Type" id="order-type-input" value="Plain T-Shirt">
+        <input type="hidden" name="Design View Facing" id="facing-view-input" value="Front">
+
+        <div class="workspace">
+            
+            <!-- LEFT WORKSPACE: Preview Screen -->
+            <div class="preview-side">
+                <!-- Using a standard pure CSS geometric representation/placeholder placeholder for the shirt background -->
+                <div class="tshirt-canvas" id="canvas-shirt" style="background-color: #ffffff; border: 1px dashed #bbb; border-radius: 8px;">
+                    <!-- Front Text overlay view container -->
+                    <div class="canvas-text-front" id="front-text-preview"></div>
+                    <!-- Back Text overlay view container (hidden initially) -->
+                    <div class="canvas-text-back" id="back-text-preview" style="display: none;"></div>
+                </div>
+                
+                <div class="view-toggle" id="view-toggle-block" style="display: none;">
+                    <button type="button" class="view-btn active" id="view-front-btn" onclick="setShirtView('Front')">Front View</button>
+                    <button type="button" class="view-btn" id="view-back-btn" onclick="setShirtView('Back')">Back View</button>
+                </div>
+            </div>
+
+            <!-- RIGHT WORKSPACE: Input Fields configuration -->
+            <div class="controls-side">
+                <div>
+                    <!-- Universal Option: Color Picker -->
+                    <div class="control-group">
+                        <label>Select Base T-Shirt Color:</label>
+                        <div class="color-picker">
+                            <div class="color-dot selected" style="background: #ffffff;" onclick="changeColor('#ffffff', this)"></div>
+                            <div class="color-dot" style="background: #000000;" onclick="changeColor('#000000', this)"></div>
+                            <div class="color-dot" style="background: #ff0000;" onclick="changeColor('#ff0000', this)"></div>
+                            <div class="color-dot" style="background: #0000ff;" onclick="changeColor('#0000ff', this)"></div>
+                            <div class="color-dot" style="background: #ffeb3b;" onclick="changeColor('#ffeb3b', this)"></div>
+                        </div>
+                        <input type="hidden" name="Selected Color" id="color-input-value" value="#ffffff">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="shirt-size">Select Size:</label>
+                        <select name="Size" id="shirt-size" required>
+                            <option value="S">Small (S)</option>
+                            <option value="M" selected>Medium (M)</option>
+                            <option value="L">Large (L)</option>
+                            <option value="XL">Extra Large (XL)</option>
+                        </select>
+                    </div>
+
+                    <!-- CUSTOM TYPE ONLY FIELDS (Revealed dynamically via JavaScript) -->
+                    <div id="custom-only-fields">
+                        <div class="control-group">
+                            <label for="front-text-input">Text on Front Side:</label>
+                            <input type="text" name="Front Text Content" id="front-text-input" placeholder="Type letters for front..." oninput="updateLiveText()">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="back-text-input">Text on Back Side:</label>
+                            <input type="text" name="Back Text Content" id="back-text-input" placeholder="Type letters for back..." oninput="updateLiveText()">
+                        </div>
+
+                        <div class="control-group">
+                            <label for="logo-upload">Upload Graphic/Image Reference:</label>
+                            <input type="file" name="Attached Design Image" id="logo-upload" accept="image/*">
+                            <small style="color:#777; display:block; margin-top:4px;">Upload your company logo or graphics reference artwork.</small>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="order-notes">Additional Ordering Preferences/Quantity:</label>
+                        <textarea name="Special Instructions" id="order-notes" rows="3" placeholder="Specify total quantities, printing method preferences, or placement specifics..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact Details Submission Frame -->
+                <div class="checkout-section">
+                    <div class="control-group">
+                        <label for="cust-name">Your Full Name *</label>
+                        <input type="text" name="Customer Name" id="cust-name" required placeholder="Enter your name">
+                    </div>
+                    <div class="control-group">
+                        <label for="cust-phone">Mobile Phone Number *</label>
+                        <input type="tel" name="Customer Phone" id="cust-phone" required placeholder="e.g. 0712345678">
+                    </div>
+
+                    <button type="submit" class="submit-order-btn">Forward Order to Bensoft Prints</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    // State management variables
+    let currentType = 'plain';
+    let currentView = 'Front';
+
+    function setOrderType(type) {
+        currentType = type;
+        
+        // Update selection UI buttons
+        document.getElementById('btn-plain').classList.toggle('active', type === 'plain');
+        document.getElementById('btn-custom').classList.toggle('active', type === 'custom');
+        
+        // Update hidden field value for email data clarity
+        document.getElementById('order-type-input').value = type === 'plain' ? 'Plain T-Shirt' : 'Customized Designer Shirt';
+
+        // Toggle custom feature modules control blocks
+        const customBlock = document.getElementById('custom-only-fields');
+        const viewToggleBlock = document.getElementById('view-toggle-block');
+        
+        if(type === 'custom') {
+            customBlock.style.display = 'block';
+            viewToggleBlock.style.display = 'flex';
+        } else {
+            customBlock.style.display = 'none';
+            viewToggleBlock.style.display = 'none';
+            // Reset to front view defaults on plain mode
+            setShirtView('Front');
+        }
+    }
+
+    function changeColor(hexColor, element) {
+        // Set preview box background tone
+        document.getElementById('canvas-shirt').style.backgroundColor = hexColor;
+        document.getElementById('color-input-value').value = hexColor;
+
+        // Toggle border selections
+        document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('selected'));
+        element.classList.add('selected');
+
+        // Text readability adjustment contrast check
+        const frontText = document.getElementById('front-text-preview');
+        const backText = document.getElementById('back-text-preview');
+        if(hexColor === '#000000') {
+            frontText.style.color = '#ffffff';
+            backText.style.color = '#ffffff';
+        } else {
+            frontText.style.color = '#000000';
+            backText.style.color = '#000000';
+        }
+    }
+
+    function setShirtView(view) {
+        currentView = view;
+        document.getElementById('facing-view-input').value = view;
+        
+        document.getElementById('view-front-btn').classList.toggle('active', view === 'Front');
+        document.getElementById('view-back-btn').classList.toggle('active', view === 'Back');
+
+        const frontTxt = document.getElementById('front-text-preview');
+        const backTxt = document.getElementById('back-text-preview');
+
+        if(view === 'Front') {
+            frontTxt.style.display = 'block';
+            backTxt.style.display = 'none';
+        } else {
+            frontTxt.style.display = 'none';
+            backTxt.style.display = 'block';
+        }
+    }
+
+    function updateLiveText() {
+        const frontVal = document.getElementById('front-text-input').value;
+        const backVal = document.getElementById('back-text-input').value;
+
+        document.getElementById('front-text-preview').innerText = frontVal;
+        document.getElementById('back-text-preview').innerText = backVal;
+    }
+</script>
+
+</body>
+</html>
