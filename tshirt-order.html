@@ -184,6 +184,34 @@
     </style>
 </head>
 <body>
+    <!-- M-Pesa Simulation Modal Pop-up -->
+<div id="mpesa-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; font-family: sans-serif;">
+    <div style="background: #1e1e1e; color: #fff; width: 320px; border-radius: 12px; padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.5); border: 2px solid #4ca64c;">
+        <!-- Safaricom Sim Toolkit Header Style -->
+        <div style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
+            <span style="color: #4ca64c; font-weight: bold; font-size: 1.2rem;">LIPA NA M-PESA</span>
+        </div>
+        
+        <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+            <p style="margin: 5px 0;"><strong>Pay Bill / Till:</strong> Bensoft Prints</p>
+            <p style="margin: 5px 0;"><strong>Amount:</strong> KSh 400.00</p>
+            <p style="margin: 5px 0;"><strong>Account:</strong> <span id="mpesa-phone-display">07XXXXXXXX</span></p>
+            <hr style="border: 0; border-top: 1px dashed #444; margin: 15px 0;">
+            <p style="text-align: center; color: #aaa; font-style: italic; font-size: 0.85rem;">[STK PUSH SIMULATION ACTIVE]</p>
+        </div>
+
+        <!-- Fake PIN input simulation box -->
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; font-size: 0.8rem; color: #aaa; margin-bottom: 5px; text-align: center;">Enter 4-Digit M-Pesa PIN:</label>
+            <input type="password" maxlength="4" placeholder="••••" disabled style="width: 100px; display: block; margin: 0 auto; text-align: center; background: #333; border: 1px solid #555; color: #fff; padding: 8px; border-radius: 4px; font-size: 1.2rem; letter-spacing: 5px;">
+        </div>
+
+        <!-- Processing animation text -->
+        <div style="text-align: center; color: #4ca64c; font-weight: bold; font-size: 0.9rem;" id="mpesa-status-text">
+            Sending STK Push Prompt...
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <header>
