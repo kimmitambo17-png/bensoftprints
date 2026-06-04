@@ -18,6 +18,7 @@
             --jersey-sleeves: #ffffff;
             --jersey-trim: #ffffff;
             --jersey-text: #ffffff;
+            --stripe-display: block; /* Toggles kit details like stripes dynamically */
         }
 
         body {
@@ -55,7 +56,7 @@
             overflow: hidden;
         }
 
-        /* --- ADVANCED 3D CSS JERSEY ENGINE --- */
+        /* --- ADVANCED STRUCTURAL CSS JERSEY ENGINE (NO EXTERNAL DATA DEPENDENCIES) --- */
         .jersey-container {
             position: relative;
             width: 300px;
@@ -77,6 +78,25 @@
             box-shadow: inset 0 25px 30px rgba(0,0,0,0.15), inset 0 -15px 20px rgba(0,0,0,0.2), 0 15px 35px rgba(0,0,0,0.4);
             z-index: 3;
             transition: background-color 0.4s ease;
+            overflow: hidden;
+        }
+
+        /* Dynamic Kit Brand Design Details (e.g., Vertical Center Panels / Stripes) */
+        .jersey-stripes-overlay {
+            display: var(--stripe-display);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Emulates high-end fabric stripes/textures natively */
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.15) 10%, transparent 10%, 
+                transparent 45%, rgba(255,255,255,0.15) 45%, 
+                rgba(255,255,255,0.15) 55%, transparent 55%, 
+                transparent 90%, rgba(255,255,255,0.15) 90%);
+            pointer-events: none;
+            z-index: 4;
         }
 
         /* Athletic Crew Neck Collar */
@@ -110,7 +130,7 @@
         .sleeve-left {
             position: absolute;
             top: 0;
-            right: 154px; /* Flushed to torso edge */
+            right: 154px; 
             width: 60px;
             height: 110px;
             background-color: var(--jersey-sleeves);
@@ -147,10 +167,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.08) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.15) 100%);
-            border-radius: 4px 4px 10px 10px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.08) 50%, rgba(0,0,0,0.18) 100%);
             pointer-events: none;
-            z-index: 4;
+            z-index: 5;
         }
 
         /* Precise alignment layer for vinyl print elements */
@@ -252,6 +271,7 @@
                 <div class="jersey-collar-patch">
                     <div class="jersey-collar-inner"></div>
                 </div>
+                <div class="jersey-stripes-overlay"></div>
                 <div class="fabric-shading-overlay"></div>
                 
                 <div class="jersey-printing">
@@ -283,11 +303,11 @@
                 <div class="form-group">
                     <label>Choose Fabric Base Color</label>
                     <div class="color-pickers">
-                        <div class="color-dot active" style="background: #034694;" onclick="changeCustomColors('#034694', '#034694', '#ffffff', '#ffffff', this)"></div>
-                        <div class="color-dot" style="background: #cc0000;" onclick="changeCustomColors('#cc0000', '#cc0000', '#ffffff', '#ffffff', this)"></div>
-                        <div class="color-dot" style="background: #ffd700;" onclick="changeCustomColors('#ffd700', '#ffd700', '#111111', '#111111', this)"></div>
-                        <div class="color-dot" style="background: #ffffff;" onclick="changeCustomColors('#ffffff', '#ffffff', '#111111', '#111111', this)"></div>
-                        <div class="color-dot" style="background: #111111;" onclick="changeCustomColors('#111111', '#111111', '#ffffff', '#ffffff', this)"></div>
+                        <div class="color-dot active" style="background: #034694;" onclick="changeCustomColors('#034694', '#034694', '#ffffff', '#ffffff', 'none', this)"></div>
+                        <div class="color-dot" style="background: #cc0000;" onclick="changeCustomColors('#cc0000', '#cc0000', '#ffffff', '#ffffff', 'none', this)"></div>
+                        <div class="color-dot" style="background: #ffd700;" onclick="changeCustomColors('#ffd700', '#ffd700', '#111111', '#111111', 'none', this)"></div>
+                        <div class="color-dot" style="background: #ffffff;" onclick="changeCustomColors('#ffffff', '#ffffff', '#111111', '#111111', 'none', this)"></div>
+                        <div class="color-dot" style="background: #111111;" onclick="changeCustomColors('#111111', '#111111', '#ffffff', '#ffffff', 'none', this)"></div>
                     </div>
                 </div>
             </div>
@@ -375,67 +395,67 @@
         "World Cup Nationals": ["Argentina", "Brazil", "France", "England", "Germany", "Portugal", "Spain", "Kenya (Harambee Stars)"]
     };
 
-    // Granular 4-Color Matrix System matching real-world designs exactly
+    // Robust 5-Value Structural Layout Engine Settings
     const teamKitColors = {
         "Arsenal": {
-            "Home Kit": { body: "#ef0107", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#ffeb3b", font: "#ffeb3b" },
-            "3rd Kit": { body: "#aaf0d1", sleeves: "#aaf0d1", trim: "#063672", font: "#063672" }
+            "Home Kit": { body: "#ef0107", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#ffeb3b", font: "#ffeb3b", stripes: "block" },
+            "3rd Kit": { body: "#aaf0d1", sleeves: "#aaf0d1", trim: "#063672", font: "#063672", stripes: "none" }
         },
         "Chelsea": {
-            "Home Kit": { body: "#034694", sleeves: "#034694", trim: "#ffffff", font: "#ffffff" },
-            "Away Kit": { body: "#f5f5f5", sleeves: "#f5f5f5", trim: "#034694", font: "#034694" },
-            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#ec589a", font: "#ec589a" }
+            "Home Kit": { body: "#034694", sleeves: "#034694", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "Away Kit": { body: "#f5f5f5", sleeves: "#f5f5f5", trim: "#034694", font: "#034694", stripes: "none" },
+            "3rd Kit": { body: "#111111", sleeves: "#111111", trim: "#ec589a", font: "#ec589a", stripes: "block" }
         },
         "Manchester United": {
-            "Home Kit": { body: "#da291c", sleeves: "#da291c", trim: "#ffffff", font: "#ffffff" },
-            "Away Kit": { body: "#22332c", sleeves: "#22332c", trim: "#ffffff", font: "#ffffff" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#da291c", font: "#da291c" }
+            "Home Kit": { body: "#da291c", sleeves: "#da291c", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "Away Kit": { body: "#22332c", sleeves: "#22332c", trim: "#ffffff", font: "#ffffff", stripes: "block" },
+            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#da291c", font: "#da291c", stripes: "none" }
         },
         "Liverpool": {
-            "Home Kit": { body: "#c8102e", sleeves: "#c8102e", trim: "#ffd700", font: "#ffd700" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#00b2a9", font: "#1c2321" },
-            "3rd Kit": { body: "#1c2321", sleeves: "#1c2321", trim: "#ffffff", font: "#ffffff" }
+            "Home Kit": { body: "#c8102e", sleeves: "#c8102e", trim: "#ffd700", font: "#ffd700", stripes: "none" },
+            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#00b2a9", font: "#1c2321", stripes: "none" },
+            "3rd Kit": { body: "#1c2321", sleeves: "#1c2321", trim: "#ffffff", font: "#ffffff", stripes: "none" }
         },
         "Manchester City": {
-            "Home Kit": { body: "#6cabdd", sleeves: "#6cabdd", trim: "#ffffff", font: "#ffffff" },
-            "Away Kit": { body: "#1c2c5b", sleeves: "#1c2c5b", trim: "#ffeb3b", font: "#ffeb3b" },
-            "3rd Kit": { body: "#333333", sleeves: "#333333", trim: "#6cabdd", font: "#6cabdd" }
+            "Home Kit": { body: "#6cabdd", sleeves: "#6cabdd", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "Away Kit": { body: "#1c2c5b", sleeves: "#1c2c5b", trim: "#ffeb3b", font: "#ffeb3b", stripes: "block" },
+            "3rd Kit": { body: "#333333", sleeves: "#333333", trim: "#6cabdd", font: "#6cabdd", stripes: "none" }
         },
         "Real Madrid": {
-            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#111111", font: "#111111" },
-            "Away Kit": { body: "#ffb6c1", sleeves: "#ffb6c1", trim: "#ffffff", font: "#ffffff" },
-            "3rd Kit": { body: "#1c2430", sleeves: "#1c2430", trim: "#ffd700", font: "#ffd700" }
+            "Home Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#111111", font: "#111111", stripes: "none" },
+            "Away Kit": { body: "#ffb6c1", sleeves: "#ffb6c1", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "3rd Kit": { body: "#1c2430", sleeves: "#1c2430", trim: "#ffd700", font: "#ffd700", stripes: "block" }
         },
         "Barcelona": {
-            "Home Kit": { body: "#004d98", sleeves: "#a50044", trim: "#ffd700", font: "#ffd700" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#004d98", font: "#ffd700" },
-            "3rd Kit": { body: "#a50044", sleeves: "#004d98", trim: "#ffffff", font: "#ffffff" }
+            "Home Kit": { body: "#004d98", sleeves: "#a50044", trim: "#ffd700", font: "#ffd700", stripes: "block" },
+            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#004d98", font: "#ffd700", stripes: "none" },
+            "3rd Kit": { body: "#a50044", sleeves: "#004d98", trim: "#ffffff", font: "#ffffff", stripes: "block" }
         },
         "Bayern Munich": {
-            "Home Kit": { body: "#ffffff", sleeves: "#dc052d", trim: "#dc052d", font: "#dc052d" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#1c2c5b", font: "#ffffff" },
-            "3rd Kit": { body: "#dc052d", sleeves: "#dc052d", trim: "#ffffff", font: "#ffffff" }
+            "Home Kit": { body: "#dc052d", sleeves: "#ffffff", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#1c2c5b", font: "#ffffff", stripes: "none" },
+            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#dc052d", font: "#dc052d", stripes: "none" }
         },
         "Borussia Dortmund": {
-            "Home Kit": { body: "#fde100", sleeves: "#111111", trim: "#111111", font: "#111111" },
-            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#fde100", font: "#fde100" },
-            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#fde100", font: "#111111" }
+            "Home Kit": { body: "#fde100", sleeves: "#111111", trim: "#111111", font: "#111111", stripes: "block" },
+            "Away Kit": { body: "#111111", sleeves: "#111111", trim: "#fde100", font: "#fde100", stripes: "none" },
+            "3rd Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#fde100", font: "#111111", stripes: "none" }
         },
         "Inter Milan": {
-            "Home Kit": { body: "#004d98", sleeves: "#111111", trim: "#ffffff", font: "#ffffff" },
-            "Away Kit": { body: "#ffffff", sleeves: "#004d98", trim: "#111111", font: "#111111" },
-            "3rd Kit": { body: "#ffeb3b", sleeves: "#ffeb3b", trim: "#111111", font: "#111111" }
+            "Home Kit": { body: "#004d98", sleeves: "#111111", trim: "#ffffff", font: "#ffffff", stripes: "block" },
+            "Away Kit": { body: "#ffffff", sleeves: "#004d98", trim: "#111111", font: "#111111", stripes: "none" },
+            "3rd Kit": { body: "#ffeb3b", sleeves: "#ffeb3b", trim: "#111111", font: "#111111", stripes: "block" }
         },
         "Juventus": {
-            "Home Kit": { body: "#111111", sleeves: "#ffffff", trim: "#ffd700", font: "#ffd700" },
-            "Away Kit": { body: "#ffd700", sleeves: "#ffd700", trim: "#111111", font: "#111111" },
-            "3rd Kit": { body: "#1c1c1c", sleeves: "#1c1c1c", trim: "#ffffff", font: "#ffffff" }
+            "Home Kit": { body: "#111111", sleeves: "#ffffff", trim: "#ffd700", font: "#ffd700", stripes: "block" },
+            "Away Kit": { body: "#ffd700", sleeves: "#ffd700", trim: "#111111", font: "#111111", stripes: "none" },
+            "3rd Kit": { body: "#1c1c1c", sleeves: "#1c1c1c", trim: "#ffffff", font: "#ffffff", stripes: "none" }
         },
         "Kenya (Harambee Stars)": {
-            "Home Kit": { body: "#cc0000", sleeves: "#cc0000", trim: "#ffffff", font: "#ffffff" },
-            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cc0000", font: "#cc0000" },
-            "3rd Kit": { body: "#228b22", sleeves: "#228b22", trim: "#ffffff", font: "#ffffff" }
+            "Home Kit": { body: "#cc0000", sleeves: "#cc0000", trim: "#ffffff", font: "#ffffff", stripes: "none" },
+            "Away Kit": { body: "#ffffff", sleeves: "#ffffff", trim: "#cc0000", font: "#cc0000", stripes: "none" },
+            "3rd Kit": { body: "#228b22", sleeves: "#228b22", trim: "#ffffff", font: "#ffffff", stripes: "none" }
         }
     };
 
@@ -474,7 +494,7 @@
         const track = document.getElementById('kit-track-input').value;
         
         if (track === 'plain') {
-            updateVisualEngine("#034694", "#034694", "#ffffff", "#ffffff");
+            updateVisualEngine("#034694", "#034694", "#ffffff", "#ffffff", "none");
             return;
         }
 
@@ -483,24 +503,24 @@
 
         if (teamKitColors[currentSelectedTeam] && teamKitColors[currentSelectedTeam][currentEdition]) {
             const cfg = teamKitColors[currentSelectedTeam][currentEdition];
-            updateVisualEngine(cfg.body, cfg.sleeves, cfg.trim, cfg.font);
+            updateVisualEngine(cfg.body, cfg.sleeves, cfg.trim, cfg.font, cfg.stripes);
         } else {
-            // Smart layout fallback fallback for unmapped assets
-            updateVisualEngine("#252525", "#252525", "#ffffff", "#ffffff");
+            updateVisualEngine("#252525", "#252525", "#ffffff", "#ffffff", "none");
         }
     }
 
-    function changeCustomColors(body, sleeves, trim, font, element) {
+    function changeCustomColors(body, sleeves, trim, font, stripes, element) {
         document.querySelectorAll('.color-pickers .color-dot').forEach(dot => dot.classList.remove('active'));
         element.classList.add('active');
-        updateVisualEngine(body, sleeves, trim, font);
+        updateVisualEngine(body, sleeves, trim, font, stripes);
     }
 
-    function updateVisualEngine(body, sleeves, trim, font) {
+    function updateVisualEngine(body, sleeves, trim, font, stripes) {
         document.documentElement.style.setProperty('--jersey-body', body);
         document.documentElement.style.setProperty('--jersey-sleeves', sleeves);
         document.documentElement.style.setProperty('--jersey-trim', trim);
         document.documentElement.style.setProperty('--jersey-text', font);
+        document.documentElement.style.setProperty('--stripe-display', stripes);
     }
 
     function updateJerseyName(val) {
@@ -516,7 +536,7 @@
         document.getElementById('preview-number-txt').style.fontFamily = fontFamilyString;
     }
 
-    // Initialize layout default selections on initial runtime load
+    // Initialize default values seamlessly on load
     window.onload = function() {
         updateTeamDropdown();
     };
