@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bensoft Prints - Inventory Management</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px; }
+    h1 { color: #1a1a1a; }
+    .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; font-size: 14px; }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-secondary { background: #6b7280; color: white; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-success { background: #22c55e; color: white; }
+    .btn-success:hover { background: #16a34a; }
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+    .btn-xs { padding: 4px 8px; font-size: 12px; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 24px; margin-bottom: 24px; }
+    .card h2 { margin-bottom: 20px; color: #1a1a1a; display: flex; align-items: center; gap: 12px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    label { font-size: 13px; font-weight: 500; color: #374151; }
+    input, select, textarea { padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .stock-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .stock-badge .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .in-stock { background: #dcfce7; color: #166534; }
+    .in-stock .dot { background: #22c55e; }
+    .out-of-stock { background: #fee2e2; color: #991b1b; }
+    .out-of-stock .dot { background: #ef4444; }
+    .low-stock { background: #fef3c7; color: #92400e; }
+    .low-stock .dot { background: #f59e0b; }
+    .category-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; text-transform: capitalize; }
+    .cat-apparel { background: #dbeafe; color: #1e40af; }
+    .cat-gifts { background: #fce7f3; color: #9d174d; }
+    .cat-print { background: #e0e7ff; color: #3730a3; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    th { font-weight: 600; color: #374151; background: #f9fafb; white-space: nowrap; }
+    tr:hover { background: #f9fafb; }
+    .variant-row { font-size: 12px; }
+    .variant-row td { padding: 8px 12px; }
+    .variant-indent { padding-left: 40px; position: relative; }
+    .variant-indent::before { content: '└─'; position: absolute; left: 12px; color: #9ca3af; }
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; opacity: 0; visibility: hidden; transition: all 0.2s; overflow-y: auto; padding: 20px; }
+    .modal.active { opacity: 1; visibility: visible; }
+    .modal-content { background: white; border-radius: 12px; padding: 24px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; transform: translateY(20px); transition: transform 0.2s; }
+    .modal.active .modal-content { transform: translateY(0); }
+    .modal h3 { margin-bottom: 20px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
+    .toast { position: fixed; bottom: 20px; right: 20px; padding: 14px 24px; border-radius: 8px; color: white; font-weight: 500; z-index: 200; transform: translateY(100px); opacity: 0; transition: all 0.3s; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: #22c55e; }
+    .toast.error { background: #ef4444; }
+    .variant-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; padding: 16px; background: #f9fafb; border-radius: 8px; }
+    .option-group { display: flex; flex-direction: column; gap: 6px; }
+    .option-group label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; }
+    .option-group select { padding: 8px 10px; font-size: 13px; }
+    .bulk-actions { display: flex; gap: 12px; align-items: end; flex-wrap: wrap; margin-bottom: 16px; padding: 16px; background: #f0f9ff; border-radius: 8px; border: 1px solid #bae6fd; }
+    .bulk-actions .form-group { margin-bottom: 0; }
+    .search-box { margin-bottom: 16px; }
+    .search-box input { width: 100%; max-width: 400px; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .stat-value { font-size: 28px; font-weight: 700; color: #1a1a1a; line-height: 1; }
+    .stat-label { font-size: 13px; color: #6b7280; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .empty-state { text-align: center; padding: 40px 20px; color: #9ca3af; }
+    .empty-state svg { width: 64px; height: 64px; margin-bottom: 16px; opacity: 0.5; }
+    
+    /* Multi-select styling */
+    .multi-select { position: relative; }
+    .multi-select-toggle { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; cursor: pointer; font-size: 14px; min-height: 44px; }
+    .multi-select-toggle:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .multi-select-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #d1d5db; border-radius: 6px; margin-top: 4px; max-height: 200px; overflow-y: auto; z-index: 10; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .multi-select.open .multi-select-dropdown { display: block; }
+    .multi-select-option { padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .multi-select-option:hover { background: #f3f4f6; }
+    .multi-select-option input { margin: 0; width: 16px; height: 16px; }
+    .selected-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; min-height: 24px; }
+    .selected-tag { display: inline-flex; align-items: center; gap: 4px; background: #dbeafe; color: #1e40af; padding: 4px 8px; border-radius: 16px; font-size: 12px; }
+    .selected-tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; font-size: 14px; line-height: 1; }
+    
+    .step { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .variant-stock-input { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 12px; }
+    .variant-stock-item { padding: 8px; background: white; border: 1px solid #e5e7eb; border-radius: 6px; }
+    .variant-stock-item label { font-size: 11px; color: #6b7280; display: block; margin-bottom: 4px; }
+    .variant-stock-item input { padding: 6px 8px; font-size: 13px; width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Inventory Management</h1>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="openProductModal()">Add Product with Variants</button>
+      </div>
+    </header>
+
+    <div class="stats-grid" id="stats-grid"></div>
+
+    <div class="card">
+      <h2>Products & Variants</h2>
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search products or variants..." oninput="filterTable()">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Product / Variant</th>
+            <th>Category</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Material</th>
+            <th>Stock</th>
+            <th>SKU</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="inventory-body"></tbody>
+      </table>
+      <div id="empty-state" class="empty-state" style="display:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        <p>No products found. Click "Add Product with Variants" to get started.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="modal" id="product-modal">
+    <div class="modal-content">
+      <h3 id="product-modal-title">Add Product with Variants</h3>
+      <form id="product-form">
+        <input type="hidden" id="product-id">
+        
+        <!-- Step 1: Product Info -->
+        <div id="product-step-1">
+          <h4 style="margin-bottom: 16px; color: #374151;">Product Information</h4>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Product ID</label>
+              <input type="text" id="product-id-input" placeholder="e.g., tshirt" required>
+            </div>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="product-name-input" placeholder="e.g., T-Shirt" required>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="product-category-input" required onchange="loadProductTemplate()">
+                <option value="apparel">Apparel</option>
+                <option value="gifts">Gifts</option>
+                <option value="print">Print Services</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+            <button type="button" class="btn btn-primary" onclick="showVariantStep()">Next: Configure Variants</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Variant Configuration -->
+        <div id="product-step-2" style="display: none;">
+          <h4 style="margin-bottom: 16px; color: #374151;">Configure Variants</h4>
+          <p style="color: #6b7280; margin-bottom: 20px; font-size: 14px;">Select colors, sizes, and materials. Each combination creates a variant with its own stock level.</p>
+          
+          <div class="variant-options">
+            <div class="form-group option-group">
+              <label>Colors</label>
+              <div class="multi-select" id="colors-multiselect">
+                <div class="multi-select-toggle" onclick="toggleMultiSelect('colors-multiselect')">
+                  <span id="colors-selected-text">Select colors...</span>
+                  <span>▼</span>
+                </div>
+                <div class="multi-select-dropdown" id="colors-dropdown"></div>
+              </div>
+              <div class="selected-tags" id="colors-tags"></div>
+            </div>
+            <div class="form-group option-group">
+              <label>Sizes</label>
+              <div class="multi-select" id="sizes-multiselect">
+                <div class="multi-select-toggle" onclick="toggleMultiSelect('sizes-multiselect')">
+                  <span id="sizes-selected-text">Select sizes...</span>
+                  <span>▼</span>
+                </div>
+                <div class="multi-select-dropdown" id="sizes-dropdown"></div>
+              </div>
+              <div class="selected-tags" id="sizes-tags"></div>
+            </div>
+            <div class="form-group option-group">
+              <label>Materials</label>
+              <div class="multi-select" id="materials-multiselect">
+                <div class="multi-select-toggle" onclick="toggleMultiSelect('materials-multiselect')">
+                  <span id="materials-selected-text">Select materials...</span>
+                  <span>▼</span>
+                </div>
+                <div class="multi-select-dropdown" id="materials-dropdown"></div>
+              </div>
+              <div class="selected-tags" id="materials-tags"></div>
+            </div>
+          </div>
+
+          <div id="stock-inputs" style="display: none;">
+            <h4 style="margin: 20px 0 12px; color: #374151;">Set Stock for Each Variant</h4>
+            <p style="color: #6b7280; margin-bottom: 16px; font-size: 13px;">Enter stock quantity for each variant combination:</p>
+            <div class="variant-stock-input" id="variant-stock-grid"></div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="showProductStep()">Back</button>
+            <button type="button" class="btn btn-primary" onclick="generateStockInputs()">Generate Stock Inputs</button>
+            <button type="submit" class="btn btn-success" id="create-product-btn" style="display: none;">Create Product & Variants</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Variant Modal (for adding single variant to existing product) -->
+  <div class="modal" id="variant-modal">
+    <div class="modal-content" style="max-width: 600px;">
+      <h3 id="variant-modal-title">Add Variant</h3>
+      <form id="variant-form">
+        <input type="hidden" id="variant-id">
+        <input type="hidden" id="variant-product-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Product</label>
+            <input type="text" id="variant-product-name" readonly style="background: #f3f4f6; color: #6b7280;">
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <select id="variant-color" required></select>
+          </div>
+          <div class="form-group">
+            <label>Size</label>
+            <select id="variant-size" required></select>
+          </div>
+          <div class="form-group">
+            <label>Material</label>
+            <select id="variant-material" required></select>
+          </div>
+          <div class="form-group">
+            <label>Stock</label>
+            <input type="number" id="variant-stock" min="0" value="0" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeVariantModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="variant-submit-btn">Add Variant</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Stock Adjustment Modal -->
+  <div class="modal" id="stock-modal">
+    <div class="modal-content">
+      <h3>Adjust Stock</h3>
+      <form id="stock-form">
+        <input type="hidden" id="stock-variant-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Variant</label>
+            <input type="text" id="stock-variant-info" readonly style="background: #f3f4f6;">
+          </div>
+          <div class="form-group">
+            <label>Current Stock</label>
+            <input type="number" id="stock-current" readonly style="background: #f3f4f6;">
+          </div>
+          <div class="form-group">
+            <label>New Stock Level</label>
+            <input type="number" id="stock-new" min="0" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeStockModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Stock</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API = '/api';
+    let allData = [];
+    let productConfigs = {};
+    let editingProductId = null;
+    let editingVariantId = null;
+    
+    // State for product creation wizard
+    let wizardState = {
+      productId: '',
+      productName: '',
+      productCategory: '',
+      selectedColors: [],
+      selectedSizes: [],
+      selectedMaterials: [],
+      variantStocks: {}
+    };
+
+    // Initialize
+    async function init() {
+      await loadConfigs();
+      await loadData();
+      renderStats();
+      renderTable();
+      setupMultiSelectClicks();
+    }
+
+    function setupMultiSelectClicks() {
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.multi-select')) {
+          document.querySelectorAll('.multi-select').forEach(ms => ms.classList.remove('open'));
+        }
+      });
+    }
+
+    async function loadConfigs() {
+      const res = await fetch(`${API}/configs`);
+      productConfigs = await res.json();
+    }
+
+    async function loadData() {
+      const [productsRes, variantsRes] = await Promise.all([
+        fetch(`${API}/products`),
+        fetch(`${API}/variants`),
+      ]);
+      const products = await productsRes.json();
+      const variants = await variantsRes.json();
+      
+      allData = products.map(p => ({
+        ...p,
+        variants: variants.filter(v => v.product_id === p.id).map(v => ({ ...v, inStock: v.stock > 0 }))
+      }));
+    }
+
+    function renderStats() {
+      const totalProducts = allData.length;
+      const totalVariants = allData.reduce((sum, p) => sum + p.variants.length, 0);
+      const totalStock = allData.reduce((sum, p) => sum + p.variants.reduce((s, v) => s + v.stock, 0), 0);
+      const outOfStock = allData.reduce((sum, p) => sum + p.variants.filter(v => v.stock === 0).length, 0);
+      const lowStock = allData.reduce((sum, p) => sum + p.variants.filter(v => v.stock > 0 && v.stock < 10).length, 0);
+
+      document.getElementById('stats-grid').innerHTML = `
+        <div class="stat-card"><div class="stat-value">${totalProducts}</div><div class="stat-label">Products</div></div>
+        <div class="stat-card"><div class="stat-value">${totalVariants}</div><div class="stat-label">Variants</div></div>
+        <div class="stat-card"><div class="stat-value">${totalStock}</div><div class="stat-label">Total Stock</div></div>
+        <div class="stat-card"><div class="stat-value" style="color: #ef4444;">${outOfStock}</div><div class="stat-label">Out of Stock</div></div>
+        <div class="stat-card"><div class="stat-value" style="color: #f59e0b;">${lowStock}</div><div class="stat-label">Low Stock (<10)</div></div>
+      `;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('inventory-body');
+      const emptyState = document.getElementById('empty-state');
+      
+      if (allData.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      tbody.innerHTML = allData.flatMap(product => {
+        const productRow = `
+          <tr data-product-id="${product.id}" style="font-weight: 600;">
+            <td>${product.name} (${product.id})</td>
+            <td><span class="category-badge cat-${product.category}">${product.category}</span></td>
+            <td colspan="3"></td>
+            <td><strong>${product.totalStock}</strong></td>
+            <td></td>
+            <td>
+              <div class="actions">
+                <button class="btn btn-secondary btn-sm" onclick="openVariantModal('${product.id}')">Add Variant</button>
+                <button class="btn btn-secondary btn-sm" onclick="editProduct('${product.id}')">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteProduct('${product.id}')">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+        
+        const variantRows = product.variants.length === 0 
+          ? `<tr class="variant-row"><td class="variant-indent" colspan="8" style="color: #9ca3af; font-style: italic;">No variants yet. Click "Add Variant" to create one.</td></tr>`
+          : product.variants.map(v => {
+              const statusClass = v.stock === 0 ? 'out-of-stock' : v.stock < 10 ? 'low-stock' : 'in-stock';
+              return `
+                <tr class="variant-row" data-variant-id="${v.id}">
+                  <td class="variant-indent">${v.color}</td>
+                  <td></td>
+                  <td>${v.color}</td>
+                  <td>${v.size}</td>
+                  <td>${v.material}</td>
+                  <td><span class="stock-badge ${statusClass}"><span class="dot"></span>${v.stock}</span></td>
+                  <td><code style="font-size: 11px;">${v.sku}</code></td>
+                  <td>
+                    <div class="actions">
+                      <button class="btn btn-primary btn-xs" onclick="openStockModal('${v.id}')">Adjust Stock</button>
+                      <button class="btn btn-secondary btn-xs" onclick="editVariant('${v.id}')">Edit</button>
+                      <button class="btn btn-danger btn-xs" onclick="deleteVariant('${v.id}')">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join('');
+        
+        return productRow + variantRows;
+      }).join('');
+    }
+
+    function filterTable() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      document.querySelectorAll('#inventory-body tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+      });
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Product Wizard
+    function openProductModal() {
+      wizardState = {
+        productId: '', productName: '', productCategory: '',
+        selectedColors: [], selectedSizes: [], selectedMaterials: [],
+        variantStocks: {}
+      };
+      editingProductId = null;
+      
+      const modal = document.getElementById('product-modal');
+      const form = document.getElementById('product-form');
+      form.reset();
+      
+      document.getElementById('product-modal-title').textContent = 'Add Product with Variants';
+      document.getElementById('product-id-input').disabled = false;
+      showProductStep();
+      modal.classList.add('active');
+    }
+
+    function showProductStep() {
+      document.getElementById('product-step-1').style.display = 'block';
+      document.getElementById('product-step-2').style.display = 'none';
+    }
+
+    function showVariantStep() {
+      const productId = document.getElementById('product-id-input').value.trim().toLowerCase();
+      const productName = document.getElementById('product-name-input').value.trim();
+      const productCategory = document.getElementById('product-category-input').value;
+      
+      if (!productId || !productName) {
+        showToast('Please fill in Product ID and Name', 'error');
+        return;
+      }
+      
+      wizardState.productId = productId;
+      wizardState.productName = productName;
+      wizardState.productCategory = productCategory;
+      
+      document.getElementById('product-step-1').style.display = 'none';
+      document.getElementById('product-step-2').style.display = 'block';
+      
+      loadProductTemplate();
+    }
+
+    function loadProductTemplate() {
+      const category = document.getElementById('product-category-input').value;
+      const productId = document.getElementById('product-id-input').value.trim().toLowerCase();
+      
+      let config = productConfigs[productId];
+      if (!config) {
+        // Default configs by category
+        const defaults = {
+          apparel: { colors: ['White', 'Black', 'Navy', 'Red', 'Blue', 'Green', 'Grey'], sizes: ['S', 'M', 'L', 'XL', 'XXL'], materials: ['Cotton', 'Polyester', 'Blend'] },
+          gifts: { colors: ['White', 'Black', 'Blue', 'Red', 'Green'], sizes: ['Standard'], materials: ['Ceramic', 'Polyester', 'Vinyl'] },
+          print: { colors: ['Full Color'], sizes: ['Standard'], materials: ['Matte', 'Gloss', 'Silk'] }
+        };
+        config = defaults[category] || defaults.gifts;
+      }
+      
+      wizardState.selectedColors = [...(config.colors || []).slice(0, 3)];
+      wizardState.selectedSizes = [...(config.sizes || []).slice(0, 3)];
+      wizardState.selectedMaterials = [...(config.materials || []).slice(0, 2)];
+      
+      renderMultiSelect('colors', config.colors || []);
+      renderMultiSelect('sizes', config.sizes || []);
+      renderMultiSelect('materials', config.materials || []);
+      
+      updateSelectedTags('colors');
+      updateSelectedTags('sizes');
+      updateSelectedTags('materials');
+      
+      document.getElementById('stock-inputs').style.display = 'none';
+      document.getElementById('create-product-btn').style.display = 'none';
+    }
+
+    function renderMultiSelect(type, options) {
+      const dropdown = document.getElementById(`${type}-dropdown`);
+      const selected = wizardState[`selected${type.charAt(0).toUpperCase() + type.slice(1)}`] || [];
+      
+      dropdown.innerHTML = options.map(opt => `
+        <label class="multi-select-option">
+          <input type="checkbox" ${selected.includes(opt) ? 'checked' : ''} onchange="toggleMultiSelectOption('${type}', '${opt.replace(/'/g, "\\'")}', this.checked)">
+          ${opt}
+        </label>
+      `).join('');
+    }
+
+    function toggleMultiSelect(id) {
+      document.querySelectorAll('.multi-select').forEach(ms => {
+        if (ms.id !== id) ms.classList.remove('open');
+      });
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    function toggleMultiSelectOption(type, value, checked) {
+      const key = `selected${type.charAt(0).toUpperCase() + type.slice(1)}`;
+      if (checked) {
+        if (!wizardState[key].includes(value)) wizardState[key].push(value);
+      } else {
+        wizardState[key] = wizardState[key].filter(v => v !== value);
+      }
+      updateSelectedTags(type);
+    }
+
+    function updateSelectedTags(type) {
+      const container = document.getElementById(`${type}-tags`);
+      const selected = wizardState[`selected${type.charAt(0).toUpperCase() + type.slice(1)}`] || [];
+      container.innerHTML = selected.map(v => `
+        <span class="selected-tag">
+          ${v}
+          <button type="button" onclick="toggleMultiSelectOption('${type}', '${v.replace(/'/g, "\\'")}', false)">&times;</button>
+        </span>
+      `).join('');
+      
+      const textEl = document.getElementById(`${type}-selected-text`);
+      textEl.textContent = selected.length > 0 ? `${selected.length} selected` : `Select ${type}...`;
+    }
+
+    function generateStockInputs() {
+      const { selectedColors, selectedSizes, selectedMaterials } = wizardState;
+      
+      if (selectedColors.length === 0 || selectedSizes.length === 0 || selectedMaterials.length === 0) {
+        showToast('Please select at least one option for each category', 'error');
+        return;
+      }
+      
+      const grid = document.getElementById('variant-stock-grid');
+      grid.innerHTML = '';
+      
+      for (const color of selectedColors) {
+        for (const size of selectedSizes) {
+          for (const material of selectedMaterials) {
+            const key = `${color}|${size}|${material}`;
+            const div = document.createElement('div');
+            div.className = 'variant-stock-item';
+            div.innerHTML = `
+              <label>${color} / ${size} / ${material}</label>
+              <input type="number" min="0" value="0" data-variant-key="${key}" onchange="updateVariantStockInput('${key}', this.value)">
+            `;
+            grid.appendChild(div);
+            wizardState.variantStocks[key] = 0;
+          }
+        }
+      }
+      
+      document.getElementById('stock-inputs').style.display = 'block';
+      document.getElementById('create-product-btn').style.display = 'inline-flex';
+    }
+
+    function updateVariantStockInput(key, value) {
+      wizardState.variantStocks[key] = parseInt(value) || 0;
+    }
+
+    function closeProductModal() {
+      document.getElementById('product-modal').classList.remove('active');
+      wizardState = { productId: '', productName: '', productCategory: '', selectedColors: [], selectedSizes: [], selectedMaterials: [], variantStocks: {} };
+    }
+
+    document.getElementById('product-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (document.getElementById('product-step-1').style.display !== 'none') {
+        showVariantStep();
+        return;
+      }
+      
+      // Create product
+      try {
+        const productRes = await fetch(`${API}/products`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: wizardState.productId,
+            name: wizardState.productName,
+            category: wizardState.productCategory
+          })
+        });
+        
+        if (!productRes.ok) {
+          const err = await productRes.json();
+          throw new Error(err.error || 'Failed to create product');
+        }
+        
+        // Create variants
+        const variantPromises = [];
+        for (const [key, stock] of Object.entries(wizardState.variantStocks)) {
+          const [color, size, material] = key.split('|');
+          variantPromises.push(
+            fetch(`${API}/products/${wizardState.productId}/variants`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ color, size, material, stock })
+            })
+          );
+        }
+        
+        await Promise.all(variantPromises);
+        
+        showToast(`Product created with ${variantPromises.length} variants`);
+        closeProductModal();
+        await loadData();
+        renderStats();
+        renderTable();
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    });
+
+    // Product CRUD
+    async function editProduct(id) {
+      const product = allData.find(p => p.id === id);
+      if (!product) return;
+      
+      editingProductId = id;
+      const modal = document.getElementById('product-modal');
+      const form = document.getElementById('product-form');
+      form.reset();
+      
+      document.getElementById('product-modal-title').textContent = 'Edit Product';
+      document.getElementById('product-id-input').value = product.id;
+      document.getElementById('product-id-input').disabled = true;
+      document.getElementById('product-name-input').value = product.name;
+      document.getElementById('product-category-input').value = product.category;
+      
+      showProductStep();
+      modal.classList.add('active');
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('Delete this product and ALL its variants?')) return;
+      const res = await fetch(`${API}/products/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Product deleted');
+        await loadData();
+        renderStats();
+        renderTable();
+      } else {
+        showToast('Failed to delete', 'error');
+      }
+    }
+
+    // Variant CRUD
+    function openVariantModal(productId, variant = null) {
+      const modal = document.getElementById('variant-modal');
+      const form = document.getElementById('variant-form');
+      form.reset();
+      
+      const product = allData.find(p => p.id === productId);
+      if (!product) return;
+      
+      const config = productConfigs[productId] || { colors: [], sizes: [], materials: [] };
+      
+      document.getElementById('variant-product-id').value = productId;
+      document.getElementById('variant-product-name').value = product.name;
+      
+      populateSelect('variant-color', config.colors);
+      populateSelect('variant-size', config.sizes);
+      populateSelect('variant-material', config.materials);
+      
+      if (variant) {
+        editingVariantId = variant.id;
+        document.getElementById('variant-modal-title').textContent = 'Edit Variant';
+        document.getElementById('variant-id').value = variant.id;
+        document.getElementById('variant-color').value = variant.color;
+        document.getElementById('variant-size').value = variant.size;
+        document.getElementById('variant-material').value = variant.material;
+        document.getElementById('variant-stock').value = variant.stock;
+        document.getElementById('variant-submit-btn').textContent = 'Save Variant';
+      } else {
+        editingVariantId = null;
+        document.getElementById('variant-modal-title').textContent = 'Add Variant';
+        document.getElementById('variant-submit-btn').textContent = 'Add Variant';
+      }
+      modal.classList.add('active');
+    }
+
+    function populateSelect(selectId, options) {
+      const select = document.getElementById(selectId);
+      select.innerHTML = options.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+    }
+
+    function closeVariantModal() {
+      document.getElementById('variant-modal').classList.remove('active');
+      editingVariantId = null;
+    }
+
+    async function editVariant(id) {
+      const variant = allData.flatMap(p => p.variants).find(v => v.id === id);
+      if (variant) {
+        const product = allData.find(p => p.id === variant.product_id);
+        openVariantModal(product.id, variant);
+      }
+    }
+
+    async function deleteVariant(id) {
+      if (!confirm('Delete this variant?')) return;
+      const res = await fetch(`${API}/variants/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('Variant deleted');
+        await loadData();
+        renderStats();
+        renderTable();
+      } else {
+        showToast('Failed to delete', 'error');
+      }
+    }
+
+    document.getElementById('variant-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const productId = document.getElementById('variant-product-id').value;
+      const data = {
+        color: document.getElementById('variant-color').value,
+        size: document.getElementById('variant-size').value,
+        material: document.getElementById('variant-material').value,
+        stock: parseInt(document.getElementById('variant-stock').value)
+      };
+
+      try {
+        let res;
+        if (editingVariantId) {
+          res = await fetch(`${API}/variants/${editingVariantId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          showToast('Variant updated');
+        } else {
+          res = await fetch(`${API}/products/${productId}/variants`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          showToast('Variant added');
+        }
+        if (!res.ok) throw new Error(await res.text());
+        closeVariantModal();
+        await loadData();
+        renderStats();
+        renderTable();
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    });
+
+    // Stock adjustment
+    function openStockModal(variantId) {
+      const variant = allData.flatMap(p => p.variants).find(v => v.id === variantId);
+      if (!variant) return;
+      
+      const product = allData.find(p => p.id === variant.product_id);
+      
+      document.getElementById('stock-variant-id').value = variantId;
+      document.getElementById('stock-variant-info').value = `${product.name} - ${variant.color} / ${variant.size} / ${variant.material}`;
+      document.getElementById('stock-current').value = variant.stock;
+      document.getElementById('stock-new').value = variant.stock;
+      
+      document.getElementById('stock-modal').classList.add('active');
+    }
+
+    function closeStockModal() {
+      document.getElementById('stock-modal').classList.remove('active');
+    }
+
+    document.getElementById('stock-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const variantId = document.getElementById('stock-variant-id').value;
+      const stock = parseInt(document.getElementById('stock-new').value);
+
+      try {
+        const res = await fetch(`${API}/variants/${variantId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ stock })
+        });
+        if (!res.ok) throw new Error(await res.text());
+        showToast('Stock updated');
+        closeStockModal();
+        await loadData();
+        renderStats();
+        renderTable();
+      } catch (err) {
+        showToast('Error: ' + err.message, 'error');
+      }
+    });
+
+    // Close modals on backdrop click
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    });
+
+    // Auto-refresh
+    setInterval(async () => {
+      await loadData();
+      renderStats();
+      renderTable();
+    }, 10000);
+
+    init();
+  </script>
+</body>
+</html>
